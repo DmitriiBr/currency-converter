@@ -1,0 +1,49 @@
+:root {
+  box-sizing: border-box;
+  font-family: apple-system, Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+
+  --translate-value: 0;
+}
+
+*,
+*::after,
+*::before {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html,
+body,
+div,
+ul,
+ol,
+li,
+a,
+img,
+span,
+p,
+b,
+input,
+label {
+  margin: 0;
+  padding: 0;
+  border: 0;
+}
+
+body {
+  --main-background-color: white;
+  --background-hover-color: rgba(186, 186, 186, 0.526);
+  --border-radius: 10px;
+  --text-color: black;
+  --font-size: 30px;
+  --list-item-height: 30px;
+  --transition-time: 0.2s;
+}
+
+.btn {
+  border: none;
+  background-color: inherit;
+}
+
+@import './components/main.scss';
