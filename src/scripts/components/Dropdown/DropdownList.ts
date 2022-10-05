@@ -17,9 +17,8 @@ export class DropdownList extends Dropdown {
 
     return `
       <ul class="${this.listClass}">
-        ${listData.map(({ text, index }) => {
-      return listItem.render({ text, index: index * 100 }, this.listClass);
-    }).join('')}
+        ${listData.map(({ text, index }) =>
+      listItem.render({ text, index: index * 100 }, this.listClass)).join('')}
       </ul>
     `;
   }
@@ -39,6 +38,14 @@ export class DropdownList extends Dropdown {
         const translateValue = (target as HTMLElement)?.dataset.translateValue;
         translateValue ? root.style.setProperty('--translate-value', translateValue) : null;
       }
+    });
+  }
+
+  addListenerItemChoose() {
+    const items = document.querySelectorAll(`.${this.listClass}--item`);
+
+    items.forEach((item) => {
+      item.addEventListener('click', () => console.log('clicked'));
     });
   }
 }

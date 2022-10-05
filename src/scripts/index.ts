@@ -7,6 +7,6 @@ import { DropdownController } from './components/Dropdown/DropdownController';
 const main = document.querySelector('main');
 
 const MyDropdownController = new DropdownController('dropdown');
-main?.insertAdjacentElement('beforeend', MyDropdownController.renderDropdown());
+main?.insertAdjacentHTML('beforeend', MyDropdownController.renderDropdown());
 
 MyDropdownController.addListeners();

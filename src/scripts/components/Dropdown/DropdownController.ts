@@ -11,19 +11,17 @@ export class DropdownController extends Dropdown {
   }
 
   public renderDropdown() {
-    const dropdownWrapper = document.createElement('div');
-    dropdownWrapper.classList.add(this.mainClass || 'dropdown');
-
-    dropdownWrapper.insertAdjacentHTML('afterbegin', `
+    return `
+      <div class="${this.mainClass}">
         ${this.btn.render(this.mainClass || 'dropdown')}
         ${this.list.render()}
-    `);
-
-    return dropdownWrapper;
+      </div>
+    `;
   }
 
   addListeners() {
     this.btn.addListenerToggle(this.list.element(), 'dropdown__list--show');
     this.list.addListenerMouseOver();
+    this.list.addListenerItemChoose();
   }
 }
