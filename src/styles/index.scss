@@ -5,32 +5,6 @@
   --translate-value: 0;
 }
 
-*,
-*::after,
-*::before {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-}
-
-html,
-body,
-div,
-ul,
-ol,
-li,
-a,
-img,
-span,
-p,
-b,
-input,
-label {
-  margin: 0;
-  padding: 0;
-  border: 0;
-}
-
 body {
   --main-background-color: white;
   --background-hover-color: rgba(186, 186, 186, 0.526);
@@ -46,4 +20,6 @@ body {
   background-color: inherit;
 }
 
+@import './components/nullify.scss';
 @import './components/main.scss';
+@import './components/dropdown.scss';
