@@ -7,7 +7,7 @@ class MainCurrencyInput {
 
   render() {
     return `
-    <input></input>
+      <input type="text" class="${this.mainClass}"/>
     `;
   }
 }
