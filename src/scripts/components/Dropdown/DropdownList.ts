@@ -1,37 +1,40 @@
 import { IDropdownListItem } from '../../data/types';
-import { Dropdown } from '.';
+import { MainDropdown } from '.';
 import { listItemsData } from '../../data';
 import { DropdownListItem } from './DropdownListItem';
 
-export class DropdownList extends Dropdown {
+export class DropdownList extends MainDropdown {
   private listClass: string;
+  private listItem: DropdownListItem;
 
-  constructor(listClass: string) {
-    super();
-    this.listClass = listClass;
+  constructor(mainClass?: string) {
+    super(mainClass);
+    this.listClass = `${mainClass}__list` || `${this.mainClass}__list`;
+    this.listItem = new DropdownListItem(this.listClass);
   }
 
   render(): string {
-    const listItem = new DropdownListItem();
     const listData: IDropdownListItem[] = listItemsData;
 
     return `
       <ul class="${this.listClass}">
-        ${listData.map(({ text, index }) =>
-      listItem.render({ text, index: index * 100 }, this.listClass)).join('')}
+        ${listData.map(({ text, index }, key) =>
+      this.listItem.render({ text, index: index * 100 }, key)).join('')}
       </ul>
     `;
   }
 
   element(): HTMLUListElement | null {
     const listElement = document.querySelector(`.${this.listClass}`);
-
     return (listElement as HTMLUListElement);
+  }
+
+  toggleList() {
+    this.element()?.classList.toggle(`${this.listClass}--show`);
   }
 
   addListenerMouseOver() {
     const root = document.documentElement;
-
     this.element()?.addEventListener('mouseover', (e: Event) => {
       const { target } = e;
       if (target) {
@@ -41,11 +44,8 @@ export class DropdownList extends Dropdown {
     });
   }
 
-  addListenerItemChoose() {
-    const items = document.querySelectorAll(`.${this.listClass}--item`);
-
-    items.forEach((item) => {
-      item.addEventListener('click', () => console.log('clicked'));
-    });
+  addAllListeners() {
+    this.addListenerMouseOver();
+    this.listItem.addListenerChooseItem(this.mainClass);
   }
 }

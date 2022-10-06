@@ -1,12 +1,18 @@
 import '../styles/index.scss';
-import { DropdownController } from './components/Dropdown/DropdownController';
-//import { listItemsData } from './data';
-//import { IDropdownListItem } from './data/types';
+import { Dropdown } from './components/Dropdown/Dropdown';
 
 // Elements
+// TODO:
+// Rename dropdown calsses main and dropdown controller [+]
+// Type guards for dropdown class [+]
+// Dropdown choosing items functional [+]
+// Show choosed item inside button title [+]
+// Style dropdown [+]
+// Animation to dropdown list [+]
+
 const main = document.querySelector('main');
 
-const MyDropdownController = new DropdownController('dropdown');
-main?.insertAdjacentHTML('beforeend', MyDropdownController.renderDropdown());
+const MyDropdown = new Dropdown('dropdown');
+main?.insertAdjacentHTML('beforeend', MyDropdown.renderDropdown());
 
-MyDropdownController.addListeners();
+MyDropdown.addListeners();
