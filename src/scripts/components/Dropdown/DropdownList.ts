@@ -15,27 +15,37 @@ export class DropdownList extends MainDropdown {
 
   render(): string {
     const listData: IDropdownListItem[] = listItemsData;
+    const selectorsLength = document.querySelectorAll(`.${this.listClass}`).length;
+
+    selectorsLength ? 0 : selectorsLength;
 
     return `
-      <ul class="${this.listClass}">
-        ${listData.map(({ text, index }, key) =>
-      this.listItem.render({ text, index: index * 100 }, key)).join('')}
-      </ul>
+      <div class="${this.listClass}--wrapper">
+        <ul class="${this.listClass}">
+          ${listData.map(({ text, index }, key) =>
+      this.listItem.render({ text, index: index * 100 }, key, selectorsLength)).join('')}
+        </ul>
+      </div>
     `;
   }
 
-  element(): HTMLUListElement | null {
+  element() {
     const listElement = document.querySelector(`.${this.listClass}`);
-    return (listElement as HTMLUListElement);
+    const listWrapperElement = document.querySelector(`.${this.listClass}--wrapper`);
+    const AllListWrapperElements = document.querySelectorAll(`.${this.listClass}--wrapper`);
+
+    return { listElement, listWrapperElement, AllListWrapperElements };
   }
 
-  toggleList() {
-    this.element()?.classList.toggle(`${this.listClass}--show`);
+  toggleList(i = 0) {
+    const { AllListWrapperElements } = this.element();
+    AllListWrapperElements[i].classList.toggle(`${this.listClass}--wrapper--show`);
   }
 
   addListenerMouseOver() {
     const root = document.documentElement;
-    this.element()?.addEventListener('mouseover', (e: Event) => {
+    const { listElement } = this.element();
+    listElement?.addEventListener('mouseover', (e: Event) => {
       const { target } = e;
       if (target) {
         const translateValue = (target as HTMLElement)?.dataset.translateValue;

@@ -1,4 +1,5 @@
 import '../styles/index.scss';
+import { MainCurrencyInput } from './components/CurrencyInput';
 import { Dropdown } from './components/Dropdown/Dropdown';
 
 // Elements
@@ -10,9 +11,38 @@ import { Dropdown } from './components/Dropdown/Dropdown';
 // Style dropdown [+]
 // Animation to dropdown list [+]
 
-const main = document.querySelector('main');
+// TODO:
+// Create app class
+// insert in app render input and dropdown
 
-const MyDropdown = new Dropdown('dropdown');
-main?.insertAdjacentHTML('beforeend', MyDropdown.renderDropdown());
+class App {
+  private appClass = 'app';
+  private dropdown = new Dropdown('dropdown');
+  private currencyInput = new MainCurrencyInput('input');
 
-MyDropdown.addListeners();
+  render() {
+    return `
+      <div class="${this.appClass}">
+        <div>
+          ${this.dropdown.renderDropdown()}
+          ${this.currencyInput.render()}
+        </div>
+        <div>
+          ${this.dropdown.renderDropdown()}
+          ${this.currencyInput.render()}
+        </div>
+      </div>
+    `;
+  }
+
+  addListeners() {
+    this.dropdown.addListeners();
+  }
+}
+
+const main = document.querySelector('.main');
+const app = new App();
+
+main?.insertAdjacentHTML('afterbegin', app.render());
+
+app.addListeners();

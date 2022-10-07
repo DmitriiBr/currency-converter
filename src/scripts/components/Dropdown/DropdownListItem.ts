@@ -11,11 +11,12 @@ export class DropdownListItem extends MainDropdown {
     this.listItemClass = `${listClass}--item`;
   }
 
-  render({ text, index }: IDropdownListItem, key: number): string {
+  render({ text, index }: IDropdownListItem, key: number, listID: number): string {
     return `
       <li 
         class="${this.listItemClass}" 
         data-translate-value="${index}%"
+        data-list-id="${listID}"
         data-key=${key}
       >
         ${text}
@@ -28,12 +29,12 @@ export class DropdownListItem extends MainDropdown {
     if (listItems) {
       return listItems;
     } else {
-      throw new Error('Not list items found');
+      throw new Error('No list items found');
     }
   }
 
-  listItemClassAdd(className: string, index: number) {
-    this.allElements()[index].classList.add(className);
+  listItemClassAdd(className: string, i: number) {
+    this.allElements()[i].classList.add(className);
   }
 
   listItemClassRemove(className: string, index: number, all?: 'all') {
@@ -53,10 +54,12 @@ export class DropdownListItem extends MainDropdown {
 
     this.allElements().forEach((elem: Node, index) => {
       elem.addEventListener('click', () => {
+        console.log(elem);
         this.dropdownChoosedItemName = listItemsData[index].text;
         this.listItemClassRemove(highlight, index, 'all');
         this.listItemClassAdd(highlight, index);
-        dropdownList.toggleList();
+        dropdownList.toggleList(Number((elem as HTMLElement).dataset.listId));
+
         if (dropdownTitle) dropdownTitle.textContent = this.dropdownChoosedItemName;
       });
     });

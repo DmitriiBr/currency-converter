@@ -24,17 +24,22 @@ export class DropdownBtn extends MainDropdown {
     `;
   }
 
-  element(): Element | null {
+  element() {
     const btnElement = document.querySelector(`.${this.btnClass}`);
-    return btnElement;
+    const allBtnELements = document.querySelectorAll(`.${this.btnClass}`);
+
+    return { btnElement, allBtnELements };
   }
 
   addListenerToggle(): void {
     const dropdownList = new DropdownList(this.mainClass);
-    this.element()?.addEventListener('click', () => {
-      if (dropdownList.element()) {
-        dropdownList.toggleList();
-      }
+    const { allBtnELements } = this.element();
+
+    allBtnELements.forEach((elem, index) => {
+      console.log(elem);
+      elem.addEventListener('click', () => {
+        dropdownList.toggleList(index);
+      });
     });
   }
 }
