@@ -13,7 +13,7 @@ export class Dropdown extends MainDropdown {
     this.btn = new DropdownBtn(this.mainClass);
   }
 
-  public renderDropdown() {
+  public render() {
     return `
       <div class="${this.mainClass}">
         ${this.btn.render()}

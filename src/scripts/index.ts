@@ -2,40 +2,39 @@ import '../styles/index.scss';
 import { MainCurrencyInput } from './components/CurrencyInput';
 import { Dropdown } from './components/Dropdown/Dropdown';
 
-// Elements
-// TODO:
-// Rename dropdown calsses main and dropdown controller [+]
-// Type guards for dropdown class [+]
-// Dropdown choosing items functional [+]
-// Show choosed item inside button title [+]
-// Style dropdown [+]
-// Animation to dropdown list [+]
 
 // TODO:
-// Create app class
-// insert in app render input and dropdown
+// Create app class [+]
+// insert in app render input and dropdown [+]
+
+// TODO:
+// Need some unique id-s to separate elements from each other`
+// Refactoring to all class elements to use them undependful from each other
+// Style corrections
+// SCSS corrections to global properties
+// Try to implement input functional to the App
 
 class App {
   private appClass = 'app';
   private dropdown = new Dropdown('dropdown');
   private currencyInput = new MainCurrencyInput('input');
 
-  render() {
+  public render() {
     return `
       <div class="${this.appClass}">
         <div>
-          ${this.dropdown.renderDropdown()}
+          ${this.dropdown.render()}
           ${this.currencyInput.render()}
         </div>
         <div>
-          ${this.dropdown.renderDropdown()}
+          ${this.dropdown.render()}
           ${this.currencyInput.render()}
         </div>
       </div>
     `;
   }
 
-  addListeners() {
+  public addListeners() {
     this.dropdown.addListeners();
   }
 }
