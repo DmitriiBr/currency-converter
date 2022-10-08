@@ -48,19 +48,19 @@ export class DropdownListItem extends MainDropdown {
   }
 
   addListenerChooseItem(mainClass: string | undefined) {
-    const dropdownTitle = new DropdownTitle(mainClass).element();
+    const dropdownTitle = new DropdownTitle(mainClass);
     const dropdownList = new DropdownList(mainClass);
     const highlight = `${this.listItemClass}--highlight`;
 
     this.allElements().forEach((elem: Node, index) => {
       elem.addEventListener('click', () => {
-        console.log(elem);
-        this.dropdownChoosedItemName = listItemsData[index].text;
+        const listID = Number((elem as HTMLElement).dataset.listId);
+        this.dropdownChoosedItemName = listItemsData[index % listItemsData.length].text;
         this.listItemClassRemove(highlight, index, 'all');
         this.listItemClassAdd(highlight, index);
-        dropdownList.toggleList(Number((elem as HTMLElement).dataset.listId));
+        dropdownList.toggleList(listID);
 
-        if (dropdownTitle) dropdownTitle.textContent = this.dropdownChoosedItemName;
+        if (dropdownTitle.elements(listID)) dropdownTitle.elements(listID).textContent = this.dropdownChoosedItemName;
       });
     });
   }

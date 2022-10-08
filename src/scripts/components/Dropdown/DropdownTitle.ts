@@ -8,13 +8,14 @@ export class DropdownTitle extends MainDropdown {
     this.titleClass = `${mainClass}__title`;
   }
 
-  render(title?: string) {
+  render() {
     return `
-      <span class="${this.titleClass}">${this.dropdownChoosedItemName || title}</span>
+      <span class="${this.titleClass}">Text</span>
     `;
   }
 
-  element() {
-    return document.querySelector(`.${this.titleClass}`);
+  elements(i = 0) {
+    const titleELements = document.querySelectorAll(`.${this.titleClass}`);
+    return titleELements[i];
   }
 }

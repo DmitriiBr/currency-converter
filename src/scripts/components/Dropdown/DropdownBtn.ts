@@ -18,7 +18,7 @@ export class DropdownBtn extends MainDropdown {
   render(): string {
     return `
       <button class="${this.btnClass}">
-        ${this.title.render('It is my dropdown')}
+        ${this.title.render()}
         ${this.arrow.render()}
       </button>
     `;
