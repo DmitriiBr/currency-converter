@@ -3,7 +3,15 @@
   margin: auto;
   align-items: center;
   justify-content: center;
-  min-width: 30vw;
+  flex-direction: column;
+  max-width: 30vw;
   height: 100vh;
   background-color: var(--main-backgroung-color);
+}
+
+.app {
+  display: flex;
+  padding: 10px;
+  border-radius: var(--border-radius);
+  box-shadow: var(--box-shadow);
 }

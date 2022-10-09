@@ -18,23 +18,28 @@ export class DropdownBtn extends MainDropdown {
   render(): string {
     return `
       <button class="${this.btnClass}">
-        ${this.title.render('It is my dropdown')}
+        ${this.title.render()}
         ${this.arrow.render()}
       </button>
     `;
   }
 
-  element(): Element | null {
+  element() {
     const btnElement = document.querySelector(`.${this.btnClass}`);
-    return btnElement;
+    const allBtnELements = document.querySelectorAll(`.${this.btnClass}`);
+
+    return { btnElement, allBtnELements };
   }
 
   addListenerToggle(): void {
     const dropdownList = new DropdownList(this.mainClass);
-    this.element()?.addEventListener('click', () => {
-      if (dropdownList.element()) {
-        dropdownList.toggleList();
-      }
+    const { allBtnELements } = this.element();
+
+    allBtnELements.forEach((elem, index) => {
+      console.log(elem);
+      elem.addEventListener('click', () => {
+        dropdownList.toggleList(index);
+      });
     });
   }
 }

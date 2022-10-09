@@ -11,11 +11,12 @@ export class DropdownListItem extends MainDropdown {
     this.listItemClass = `${listClass}--item`;
   }
 
-  render({ text, index }: IDropdownListItem, key: number): string {
+  render({ text, index }: IDropdownListItem, key: number, listID: number): string {
     return `
       <li 
         class="${this.listItemClass}" 
         data-translate-value="${index}%"
+        data-list-id="${listID}"
         data-key=${key}
       >
         ${text}
@@ -28,12 +29,12 @@ export class DropdownListItem extends MainDropdown {
     if (listItems) {
       return listItems;
     } else {
-      throw new Error('Not list items found');
+      throw new Error('No list items found');
     }
   }
 
-  listItemClassAdd(className: string, index: number) {
-    this.allElements()[index].classList.add(className);
+  listItemClassAdd(className: string, i: number) {
+    this.allElements()[i].classList.add(className);
   }
 
   listItemClassRemove(className: string, index: number, all?: 'all') {
@@ -47,17 +48,19 @@ export class DropdownListItem extends MainDropdown {
   }
 
   addListenerChooseItem(mainClass: string | undefined) {
-    const dropdownTitle = new DropdownTitle(mainClass).element();
+    const dropdownTitle = new DropdownTitle(mainClass);
     const dropdownList = new DropdownList(mainClass);
     const highlight = `${this.listItemClass}--highlight`;
 
     this.allElements().forEach((elem: Node, index) => {
       elem.addEventListener('click', () => {
-        this.dropdownChoosedItemName = listItemsData[index].text;
+        const listID = Number((elem as HTMLElement).dataset.listId);
+        this.dropdownChoosedItemName = listItemsData[index % listItemsData.length].text;
         this.listItemClassRemove(highlight, index, 'all');
         this.listItemClassAdd(highlight, index);
-        dropdownList.toggleList();
-        if (dropdownTitle) dropdownTitle.textContent = this.dropdownChoosedItemName;
+        dropdownList.toggleList(listID);
+
+        if (dropdownTitle.elements(listID)) dropdownTitle.elements(listID).textContent = this.dropdownChoosedItemName;
       });
     });
   }

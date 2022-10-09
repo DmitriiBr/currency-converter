@@ -1,18 +1,47 @@
 import '../styles/index.scss';
+import { MainCurrencyInput } from './components/CurrencyInput';
 import { Dropdown } from './components/Dropdown/Dropdown';
 
-// Elements
+
 // TODO:
-// Rename dropdown calsses main and dropdown controller [+]
-// Type guards for dropdown class [+]
-// Dropdown choosing items functional [+]
-// Show choosed item inside button title [+]
-// Style dropdown [+]
-// Animation to dropdown list [+]
+// Create app class [+]
+// insert in app render input and dropdown [+]
 
-const main = document.querySelector('main');
+// TODO:
+// Need some unique id-s to separate elements from each other`
+// Refactoring to all class elements to use them undependful from each other
+// Style corrections
+// SCSS corrections to global properties
+// Try to implement input functional to the App
 
-const MyDropdown = new Dropdown('dropdown');
-main?.insertAdjacentHTML('beforeend', MyDropdown.renderDropdown());
+class App {
+  private appClass = 'app';
+  private dropdown = new Dropdown('dropdown');
+  private currencyInput = new MainCurrencyInput('input');
 
-MyDropdown.addListeners();
+  public render() {
+    return `
+      <div class="${this.appClass}">
+        <div>
+          ${this.dropdown.render()}
+          ${this.currencyInput.render()}
+        </div>
+        <div>
+          ${this.dropdown.render()}
+          ${this.currencyInput.render()}
+        </div>
+      </div>
+    `;
+  }
+
+  public addListeners() {
+    this.dropdown.addListeners();
+  }
+}
+
+const main = document.querySelector('.main');
+const app = new App();
+
+main?.insertAdjacentHTML('afterbegin', app.render());
+
+app.addListeners();
