@@ -3,6 +3,7 @@ import { listItemsData } from '../../data';
 import { IDropdownListItem } from '../../data/types';
 import { DropdownList } from './DropdownList';
 import { DropdownTitle } from './DropdownTitle';
+import { dropdownID } from './Dropdown';
 
 export class DropdownListItem extends MainDropdown {
   private listItemClass: string;
@@ -11,12 +12,12 @@ export class DropdownListItem extends MainDropdown {
     this.listItemClass = `${listClass}--item`;
   }
 
-  render({ text, index }: IDropdownListItem, key: number, listID: number): string {
+  render({ text, index }: IDropdownListItem, key: number): string {
     return `
       <li 
-        class="${this.listItemClass}" 
+        class="${this.listItemClass} ${this.listItemClass}--id_${dropdownID}" 
         data-translate-value="${index}%"
-        data-list-id="${listID}"
+        data-dropdown-list-item-id="${dropdownID}"
         data-key=${key}
       >
         ${text}
@@ -24,43 +25,47 @@ export class DropdownListItem extends MainDropdown {
     `;
   }
 
-  allElements() {
+
+  allElements(id: number, all?: 'all') {
     const listItems: NodeListOf<Element> = document.querySelectorAll(`.${this.listItemClass}`);
-    if (listItems) {
-      return listItems;
-    } else {
+    const listItemsByDropdownID = document.querySelectorAll(`.${this.listItemClass}--id_${id}`);
+
+    if (all) return listItems;
+
+    if (listItems) return listItemsByDropdownID;
+    else {
       throw new Error('No list items found');
     }
   }
 
-  listItemClassAdd(className: string, i: number) {
-    this.allElements()[i].classList.add(className);
+  listItemClassAdd(className: string, i: number, id: number) {
+    this.allElements(id)[i].classList.add(className);
   }
 
-  listItemClassRemove(className: string, index: number, all?: 'all') {
+  listItemClassRemove(className: string, index: number, id: number, all?: 'all') {
     if (all) {
-      this.allElements().forEach((_, index) => {
-        this.listItemClassRemove(className, index);
+      this.allElements(id).forEach((_, index) => {
+        this.listItemClassRemove(className, index, id);
       });
     }
 
-    this.allElements()[index].classList.remove(className);
+    this.allElements(id)[index].classList.remove(className);
   }
 
-  addListenerChooseItem(mainClass: string | undefined) {
+  addListenerChooseItem(mainClass?: string | undefined) {
     const dropdownTitle = new DropdownTitle(mainClass);
     const dropdownList = new DropdownList(mainClass);
     const highlight = `${this.listItemClass}--highlight`;
 
-    this.allElements().forEach((elem: Node, index) => {
+    this.allElements(0, 'all').forEach((elem: Node, index) => {
       elem.addEventListener('click', () => {
-        const listID = Number((elem as HTMLElement).dataset.listId);
-        this.dropdownChoosedItemName = listItemsData[index % listItemsData.length].text;
-        this.listItemClassRemove(highlight, index, 'all');
-        this.listItemClassAdd(highlight, index);
-        dropdownList.toggleList(listID);
+        const currentIndex = index % listItemsData.length;
+        const dropdownID = Number((elem as HTMLElement).dataset.dropdownListItemId);
 
-        if (dropdownTitle.elements(listID)) dropdownTitle.elements(listID).textContent = this.dropdownChoosedItemName;
+        this.listItemClassRemove(highlight, currentIndex, dropdownID, 'all');
+        this.listItemClassAdd(highlight, currentIndex, dropdownID);
+        dropdownList.toggleList(dropdownID);
+        dropdownTitle.elements(dropdownID).textContent = listItemsData[currentIndex].text;
       });
     });
   }

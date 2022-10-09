@@ -2,6 +2,8 @@ import { MainDropdown } from '.';
 import { DropdownBtn } from './DropdownBtn';
 import { DropdownList } from './DropdownList';
 
+export let dropdownID = -1;
+
 export class Dropdown extends MainDropdown {
   private list;
   private btn;
@@ -14,8 +16,10 @@ export class Dropdown extends MainDropdown {
   }
 
   public render() {
+    dropdownID++;
+
     return `
-      <div class="${this.mainClass}">
+      <div class="${this.mainClass} ${this.mainClass}--id_${dropdownID}">
         ${this.btn.render()}
         ${this.list.render()}
       </div>

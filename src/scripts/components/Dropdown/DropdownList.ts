@@ -2,8 +2,7 @@ import { IDropdownListItem } from '../../data/types';
 import { MainDropdown } from '.';
 import { listItemsData } from '../../data';
 import { DropdownListItem } from './DropdownListItem';
-
-let listID = -1;
+import { dropdownID } from './Dropdown';
 
 export class DropdownList extends MainDropdown {
   private listClass: string;
@@ -17,13 +16,12 @@ export class DropdownList extends MainDropdown {
 
   render(): string {
     const listData: IDropdownListItem[] = listItemsData;
-    listID++;
 
     return `
       <div class="${this.listClass}--wrapper">
-        <ul class="${this.listClass} data-list-id="${listID}">
+        <ul class="${this.listClass} ${this.listClass}--id_${dropdownID}">
           ${listData.map(({ text, index }, key) =>
-      this.listItem.render({ text, index: index * 100 }, key, listID)).join('')}
+      this.listItem.render({ text, index: index * 100 }, key)).join('')}
         </ul>
       </div>
     `;
@@ -41,9 +39,7 @@ export class DropdownList extends MainDropdown {
     AllListWrapperElements[i].classList.toggle(`${this.listClass}--wrapper--show`);
   }
 
-  // Here i need to understand how to make animations undependful between two lists
   addListenerMouseOver() {
-    const root = document.documentElement;
     const allListELements = document.querySelectorAll(`.${this.listClass}`);
 
     allListELements.forEach(elem => {
@@ -52,19 +48,10 @@ export class DropdownList extends MainDropdown {
 
         if (target) {
           const translateValue = (target as HTMLElement)?.dataset.translateValue;
-          translateValue ? root.style.setProperty('--translate-value', translateValue) : null;
+          translateValue ? (elem as HTMLElement).style.setProperty('--translate-value', translateValue) : null;
         }
       });
     });
-
-    // listElement?.addEventListener('mouseover', (e: Event) => {
-    //   const { target } = e;
-
-    //   if (target) {
-    //     const translateValue = (target as HTMLElement)?.dataset.translateValue;
-    //     translateValue ? root.style.setProperty('--translate-value', translateValue) : null;
-    //   }
-    // });
   }
 
   addAllListeners() {

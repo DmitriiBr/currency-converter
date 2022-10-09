@@ -2,6 +2,7 @@ import { MainDropdown } from '.';
 import { DropdownTitle } from './DropdownTitle';
 import { DropdownArrow } from './DropdownArrow';
 import { DropdownList } from './DropdownList';
+import { dropdownID } from './Dropdown';
 
 export class DropdownBtn extends MainDropdown {
   private btnClass: string;
@@ -17,7 +18,9 @@ export class DropdownBtn extends MainDropdown {
 
   render(): string {
     return `
-      <button class="${this.btnClass}">
+      <button class="${this.btnClass} ${this.btnClass}--id_${dropdownID}"
+        data-dropdown-btn="${dropdownID}"
+      >
         ${this.title.render()}
         ${this.arrow.render()}
       </button>
@@ -36,7 +39,6 @@ export class DropdownBtn extends MainDropdown {
     const { allBtnELements } = this.element();
 
     allBtnELements.forEach((elem, index) => {
-      console.log(elem);
       elem.addEventListener('click', () => {
         dropdownList.toggleList(index);
       });

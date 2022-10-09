@@ -1,4 +1,5 @@
 import { MainDropdown } from '.';
+import { dropdownID } from './Dropdown';
 
 export class DropdownTitle extends MainDropdown {
   private titleClass: string | undefined;
@@ -10,7 +11,11 @@ export class DropdownTitle extends MainDropdown {
 
   render() {
     return `
-      <span class="${this.titleClass}">Text</span>
+      <span class="${this.titleClass} ${this.titleClass}--id_${dropdownID}"
+        data-dropdown-title-id="${dropdownID}"
+      >
+        Text
+      </span>
     `;
   }
 
