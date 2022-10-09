@@ -1,3 +1,6 @@
+import { currencyRates } from '../../data';
+let inputID = -1;
+
 export class MainCurrencyInput {
   protected mainClass: string;
 
@@ -6,15 +9,36 @@ export class MainCurrencyInput {
   }
 
   render() {
+    inputID++;
     return `
-      <input type="text" class="${this.mainClass}"/>
-        <div class="${this.mainClass}__wrapper">
+      <div class="${this.mainClass}__wrapper">
         <input 
           type="number" 
           class="${this.mainClass}__field 
-          ${this.mainClass}__field--currency"
+          ${this.mainClass}__field--currency ${this.mainClass}__field--id_${inputID}"
+          data-input-id="${inputID}"
         >
       </div>
     `;
+  }
+
+  elements(): NodeListOf<HTMLInputElement> {
+    const inputElements = document.querySelectorAll(`.${this.mainClass}__field`);
+    return (inputElements as NodeListOf<HTMLInputElement>);
+  }
+
+  addListenerConvert() {
+    const inputElements = this.elements();
+    console.log(currencyRates);
+
+    inputElements.forEach(<T extends HTMLInputElement>(elem: T) => {
+      elem.addEventListener('input', <U extends Event>(e: U) => {
+        const { target } = e;
+        if (target instanceof HTMLElement) {
+          console.log(target.dataset.inputId);
+        }
+      });
+    });
+    return 0;
   }
 }

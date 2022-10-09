@@ -1,9 +1,9 @@
 import { MainDropdown } from '.';
-import { listItemsData } from '../../data';
 import { IDropdownListItem } from '../../data/types';
 import { DropdownList } from './DropdownList';
 import { DropdownTitle } from './DropdownTitle';
 import { dropdownID } from './Dropdown';
+import { currencyRatesToArray } from '../../utils';
 
 export class DropdownListItem extends MainDropdown {
   private listItemClass: string;
@@ -52,20 +52,25 @@ export class DropdownListItem extends MainDropdown {
     this.allElements(id)[index].classList.remove(className);
   }
 
+  // Here im trying to refactor in wihout parameters inside function
   addListenerChooseItem(mainClass?: string | undefined) {
     const dropdownTitle = new DropdownTitle(mainClass);
     const dropdownList = new DropdownList(mainClass);
     const highlight = `${this.listItemClass}--highlight`;
+    const listData = currencyRatesToArray();
 
-    this.allElements(0, 'all').forEach((elem: Node, index) => {
+    this.allElements(0, 'all').forEach((elem: Element, index: number) => {
       elem.addEventListener('click', () => {
-        const currentIndex = index % listItemsData.length;
-        const dropdownID = Number((elem as HTMLElement).dataset.dropdownListItemId);
+        if (elem instanceof HTMLElement) {
+          const currentIndex = index % listData.length;
+          const dropdownID = Number(elem.dataset.dropdownListItemId);
 
-        this.listItemClassRemove(highlight, currentIndex, dropdownID, 'all');
-        this.listItemClassAdd(highlight, currentIndex, dropdownID);
-        dropdownList.toggleList(dropdownID);
-        dropdownTitle.elements(dropdownID).textContent = listItemsData[currentIndex].text;
+          this.listItemClassRemove(highlight, currentIndex, dropdownID, 'all');
+          this.listItemClassAdd(highlight, currentIndex, dropdownID);
+
+          dropdownTitle.elements(dropdownID).textContent = listData[currentIndex][0];
+          dropdownList.toggleList(dropdownID);
+        }
       });
     });
   }

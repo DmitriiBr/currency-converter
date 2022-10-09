@@ -1,8 +1,7 @@
-import { IDropdownListItem } from '../../data/types';
 import { MainDropdown } from '.';
-import { listItemsData } from '../../data';
 import { DropdownListItem } from './DropdownListItem';
 import { dropdownID } from './Dropdown';
+import { currencyRatesToArray } from '../../utils';
 
 export class DropdownList extends MainDropdown {
   private listClass: string;
@@ -15,13 +14,13 @@ export class DropdownList extends MainDropdown {
   }
 
   render(): string {
-    const listData: IDropdownListItem[] = listItemsData;
+    const listData = currencyRatesToArray();
 
     return `
       <div class="${this.listClass}--wrapper">
         <ul class="${this.listClass} ${this.listClass}--id_${dropdownID}">
-          ${listData.map(({ text, index }, key) =>
-      this.listItem.render({ text, index: index * 100 }, key)).join('')}
+          ${listData.map((item, key) =>
+      this.listItem.render({ text: item[0], index: key * 100 }, key)).join('')}
         </ul>
       </div>
     `;
@@ -46,8 +45,8 @@ export class DropdownList extends MainDropdown {
       elem.addEventListener('mouseover', (e: Event) => {
         const { target } = e;
 
-        if (target) {
-          const translateValue = (target as HTMLElement)?.dataset.translateValue;
+        if (target instanceof HTMLElement) {
+          const translateValue = target.dataset.translateValue;
           translateValue ? (elem as HTMLElement).style.setProperty('--translate-value', translateValue) : null;
         }
       });

@@ -8,10 +8,6 @@ import { Dropdown } from './components/Dropdown/Dropdown';
 // insert in app render input and dropdown [+]
 
 // TODO:
-// Need some unique id-s to separate elements from each other`
-// Refactoring to all class elements to use them undependful from each other
-// Style corrections
-// SCSS corrections to global properties
 // Try to implement input functional to the App
 
 class App {
@@ -36,6 +32,7 @@ class App {
 
   public addListeners() {
     this.dropdown.addListeners();
+    this.currencyInput.addListenerConvert();
   }
 }
 
