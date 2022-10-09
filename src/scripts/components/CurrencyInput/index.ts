@@ -27,6 +27,8 @@ export class MainCurrencyInput {
     return (inputElements as NodeListOf<HTMLInputElement>);
   }
 
+  // Create convert functional to inputs bm 2 - 3 methods more
+  // Self
   addListenerConvert() {
     const inputElements = this.elements();
     console.log(currencyRates);
