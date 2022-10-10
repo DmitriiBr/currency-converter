@@ -77,7 +77,7 @@
       border-radius: var(--border-radius);
       height: var(--list-item-height);
       transform: translateY(var(--translate-value));
-      transition: all var(--transition-time) cubic-bezier(.89, .67, 0, 1.49);
+      transition: all var(--transition-time) cubic-bezier(.17, .67, .57, 1.51);
       pointer-events: none;
     }
 

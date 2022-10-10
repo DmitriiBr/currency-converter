@@ -4,6 +4,8 @@ import { dropdownID } from './Dropdown';
 import { currencyRatesToArray } from '../../utils';
 import { getAllElements } from '../../Main/GetElement';
 import { RenderElement } from '../../Main/RenderElement';
+import { currencyRatesValidNames } from '../../data';
+//import { currencyRatesValidNames } from '../../data';
 
 export class DropdownList extends MainDropdown {
   private listClass: string;
@@ -20,8 +22,8 @@ export class DropdownList extends MainDropdown {
     const list = new RenderElement({
       tagName: 'ul',
       className: [this.listClass, `${this.listClass}--id_${dropdownID}`],
-      inner: [`${listData.map((item, key) =>
-        this.listItem.render({ text: item[0], index: key }, key)).join('')}`]
+      inner: [`${listData.map((_, key) =>
+        this.listItem.render({ text: currencyRatesValidNames[key], index: key }, key)).join('')}`]
     });
 
     const wrapper = new RenderElement({

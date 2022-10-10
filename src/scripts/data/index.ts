@@ -8,6 +8,19 @@ export const listItemsData: IDropdownListItem[] = [
   { text: 'item5', index: 4 },
 ];
 
+export const currencyRatesValidNames = [
+  'United Arab Emirates Dirham',
+  'Afghan Afghani',
+  'Albanian Lek',
+  'Armenian Dram',
+  'Netherlands Antillean Guilder',
+  'Angolan Kwanza equals',
+  'Argentine Peso',
+  'Australian Dollar',
+  'Russian Rouble',
+  'Euro'
+];
+
 export const currencyRates: ICurrencyRates = {
   base: 'USD',
   rates: {

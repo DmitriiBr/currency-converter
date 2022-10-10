@@ -6,6 +6,7 @@ import { currencyRatesToArray } from '../../utils';
 import { getAllElements } from '../../Main/GetElement';
 import { classAdd, classRemove, IChangableElementByClass } from '../../Main/ChangeElementClass';
 import { RenderElement } from '../../Main/RenderElement';
+//import { currencyRatesValidNames } from '../../data';
 
 export class DropdownListItem {
   private listItemClass: string;
@@ -42,6 +43,7 @@ export class DropdownListItem {
         if (elem instanceof HTMLElement) {
           const currentIndex = index % listData.length;
           const dropdownID = Number(elem.dataset.dropdownListItemId);
+          const currentName = listData[currentIndex][0];
 
           const currentItem: IChangableElementByClass = {
             elementClassName: `${this.listItemClass}--id_${dropdownID}`,
@@ -51,8 +53,9 @@ export class DropdownListItem {
 
           classRemove({ ...currentItem, all: true });
           classAdd(currentItem);
+          console.log(currentName);
 
-          dropdownTitle.elements(dropdownID).textContent = listData[currentIndex][0];
+          dropdownTitle.elements(dropdownID).textContent = currentName;
           dropdownList.toggleList(dropdownID);
         }
       });

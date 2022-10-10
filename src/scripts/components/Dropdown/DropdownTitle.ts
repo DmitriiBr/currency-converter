@@ -12,7 +12,7 @@ export class DropdownTitle {
       <span class="${this.titleClass} ${this.titleClass}--id_${dropdownID}"
         data-dropdown-title-id="${dropdownID}"
       >
-        Text
+        Choose currency
       </span>
     `;
   }
