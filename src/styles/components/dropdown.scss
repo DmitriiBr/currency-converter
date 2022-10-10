@@ -35,6 +35,7 @@
     }
 
     &:focus {
+      border: var(--border-focus);
       box-shadow: var(--box-shadow-focus);
     }
   }
@@ -72,12 +73,12 @@
       left: 0;
       z-index: -1;
       opacity: 0.5;
-      transition: all var(--transition-time) linear;
-      transform: translateY(var(--translate-value));
+      background: rgb(156, 156, 156);
       border-radius: var(--border-radius);
       height: var(--list-item-height);
+      transform: translateY(var(--translate-value));
+      transition: all var(--transition-time) cubic-bezier(.89, .67, 0, 1.49);
       pointer-events: none;
-      background: rgb(156, 156, 156);
     }
 
     &--item {
@@ -91,8 +92,8 @@
       cursor: pointer;
 
       &--highlight {
-        color: white;
         background-color: var(--list-item-highlight);
+        font-size: calc(var(--font-size) + 4px);
       }
 
       &:hover {
