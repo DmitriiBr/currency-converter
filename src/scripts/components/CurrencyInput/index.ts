@@ -36,6 +36,7 @@ export class MainCurrencyInput {
     inputElements.forEach(<T extends HTMLInputElement>(elem: T) => {
       elem.addEventListener('input', <U extends Event>(e: U) => {
         const { target } = e;
+
         if (target instanceof HTMLElement) {
           console.log(target.dataset.inputId);
         }

@@ -3,9 +3,6 @@ import { MainCurrencyInput } from './components/CurrencyInput';
 import { Dropdown } from './components/Dropdown/Dropdown';
 
 
-// TODO:
-// Create app class [+]
-// insert in app render input and dropdown [+]
 
 // TODO:
 // Try to implement input functional to the App

@@ -1,11 +1,9 @@
-import { MainDropdown } from '.';
 import { dropdownID } from './Dropdown';
 
-export class DropdownArrow extends MainDropdown {
+export class DropdownArrow {
   private arrowClass: string;
 
   constructor(mainClass: string) {
-    super(mainClass);
     this.arrowClass = `${mainClass}__arrow`;
   }
 

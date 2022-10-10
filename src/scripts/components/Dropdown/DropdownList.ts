@@ -2,6 +2,8 @@ import { MainDropdown } from '.';
 import { DropdownListItem } from './DropdownListItem';
 import { dropdownID } from './Dropdown';
 import { currencyRatesToArray } from '../../utils';
+import { getAllElements } from '../../Main/GetElement';
+import { RenderElement } from '../../Main/RenderElement';
 
 export class DropdownList extends MainDropdown {
   private listClass: string;
@@ -15,31 +17,29 @@ export class DropdownList extends MainDropdown {
 
   render(): string {
     const listData = currencyRatesToArray();
+    const list = new RenderElement({
+      tagName: 'ul',
+      className: [this.listClass, `${this.listClass}--id_${dropdownID}`],
+      inner: [`${listData.map((item, key) =>
+        this.listItem.render({ text: item[0], index: key }, key)).join('')}`]
+    });
 
-    return `
-      <div class="${this.listClass}--wrapper">
-        <ul class="${this.listClass} ${this.listClass}--id_${dropdownID}">
-          ${listData.map((item, key) =>
-      this.listItem.render({ text: item[0], index: key * 100 }, key)).join('')}
-        </ul>
-      </div>
-    `;
-  }
+    const wrapper = new RenderElement({
+      tagName: 'div',
+      className: [`${this.listClass}--wrapper`],
+      inner: [list.render()]
+    });
 
-  element() {
-    const listElement = document.querySelector(`.${this.listClass}`);
-    const AllListWrapperElements = document.querySelectorAll(`.${this.listClass}--wrapper`);
-
-    return { listElement, AllListWrapperElements };
+    return wrapper.render();
   }
 
   toggleList(i = 0) {
-    const { AllListWrapperElements } = this.element();
-    AllListWrapperElements[i].classList.toggle(`${this.listClass}--wrapper--show`);
+    const allListWrapperElements = getAllElements(`${this.listClass}--wrapper`);
+    allListWrapperElements[i].classList.toggle(`${this.listClass}--wrapper--show`);
   }
 
   addListenerMouseOver() {
-    const allListELements = document.querySelectorAll(`.${this.listClass}`);
+    const allListELements = getAllElements(this.listClass);
 
     allListELements.forEach(elem => {
       elem.addEventListener('mouseover', (e: Event) => {
@@ -55,6 +55,6 @@ export class DropdownList extends MainDropdown {
 
   addAllListeners() {
     this.addListenerMouseOver();
-    this.listItem.addListenerChooseItem(this.mainClass);
+    this.listItem.addListenerChooseItem();
   }
 }

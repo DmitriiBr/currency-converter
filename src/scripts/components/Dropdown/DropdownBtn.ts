@@ -1,47 +1,42 @@
-import { MainDropdown } from '.';
 import { DropdownTitle } from './DropdownTitle';
 import { DropdownArrow } from './DropdownArrow';
 import { DropdownList } from './DropdownList';
 import { dropdownID } from './Dropdown';
+import { RenderElement } from '../../Main/RenderElement';
+import { getAllElements } from '../../Main/GetElement';
 
-export class DropdownBtn extends MainDropdown {
+
+export class DropdownBtn {
   private btnClass: string;
-  private title;
-  private arrow: DropdownArrow;
+  private mainClass: string;
 
   constructor(mainClass: string) {
-    super(mainClass);
     this.btnClass = `${mainClass}__btn`;
-    this.title = new DropdownTitle(mainClass);
-    this.arrow = new DropdownArrow(mainClass);
+    this.mainClass = mainClass;
   }
 
   render(): string {
-    return `
-      <button class="${this.btnClass} ${this.btnClass}--id_${dropdownID}"
-        data-dropdown-btn="${dropdownID}"
-      >
-        ${this.title.render()}
-        ${this.arrow.render()}
-      </button>
-    `;
-  }
+    const title = new DropdownTitle(this.mainClass);
+    const arrow = new DropdownArrow(this.mainClass);
 
-  element() {
-    const btnElement = document.querySelector(`.${this.btnClass}`);
-    const allBtnELements = document.querySelectorAll(`.${this.btnClass}`);
+    const element = new RenderElement({
+      tagName: 'button',
+      className: [`${this.btnClass}, ${this.btnClass}--id_${dropdownID}`],
+      inner: [title.render(), arrow.render()]
+    });
 
-    return { btnElement, allBtnELements };
+    return element.render();
   }
 
   addListenerToggle(): void {
     const dropdownList = new DropdownList(this.mainClass);
-    const { allBtnELements } = this.element();
+    const btnElements: NodeListOf<Element> = getAllElements(this.btnClass);
 
-    allBtnELements.forEach((elem, index) => {
+    btnElements.forEach((elem, index) => {
       elem.addEventListener('click', () => {
         dropdownList.toggleList(index);
       });
     });
   }
 }
+
