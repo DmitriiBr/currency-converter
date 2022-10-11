@@ -6,7 +6,6 @@ export let dropdownID = -1;
 
 export class Dropdown {
   public mainClass: string;
-
   constructor(mainClass: string) {
     this.mainClass = mainClass;
   }

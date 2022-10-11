@@ -21,11 +21,13 @@ export class RenderElementNew {
   private inner: Node[] | string | undefined;
   private dataset: IDataset | undefined;
   private actions: IActions | undefined;
+  private type: string | undefined;
 
-  constructor({ tagName, className, inner, dataset, actions }: IElement) {
+  constructor({ tagName, className, inner, type, dataset, actions }: IElement) {
     this.tagName = tagName;
     this.className = className;
     this.inner = inner;
+    this.type = type;
     this.dataset = dataset;
     this.actions = actions;
   }
@@ -33,6 +35,7 @@ export class RenderElementNew {
   render(): Node {
     const element = document.createElement(this.tagName);
     element.classList.add(...this.className);
+    element.setAttribute('type', this.type || '');
 
     for (const key in this.dataset) {
       element.setAttribute(`data-${key}`, this.dataset[key]);

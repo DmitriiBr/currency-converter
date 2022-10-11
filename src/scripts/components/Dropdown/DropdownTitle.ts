@@ -25,4 +25,8 @@ export class DropdownTitle {
     const titleELements = document.querySelectorAll(`.${this.titleClass}`);
     return titleELements[i];
   }
+
+  getClass() {
+    return this.titleClass;
+  }
 }

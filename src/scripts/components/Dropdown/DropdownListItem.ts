@@ -7,6 +7,7 @@ import { getAllElements } from '../../Main/GetElement';
 import { classAdd, classRemove, IChangableElementByClass } from '../../Main/ChangeElementClass';
 import { RenderElementNew } from '../../Main/RenderElement';
 import { currencyRatesValidNames } from '../../data';
+import { Store } from '../../store';
 
 export class DropdownListItem {
   private listItemClass: string;
@@ -29,6 +30,8 @@ export class DropdownListItem {
 
     return element.render();
   }
+
+  // Need to change converting after choosing a new item
 
   addListenerChooseItem() {
     const mainClass = this.listItemClass.slice(0, this.listItemClass.indexOf('_'));
@@ -54,8 +57,11 @@ export class DropdownListItem {
           classRemove({ ...currentItem, all: true });
           classAdd(currentItem);
 
-          dropdownTitle.elements(dropdownListItemID).textContent = currentName;
+          getAllElements(dropdownTitle.getClass())[dropdownListItemID].textContent = currentName;
           dropdownList.toggleList(dropdownListItemID);
+
+          Store.choosedItemID[dropdownListItemID] = currentIndex;
+          Store.choosedItemName[dropdownListItemID] = currentName;
         }
       });
     });

@@ -4,7 +4,6 @@ import { dropdownID } from './Dropdown';
 import { currencyRatesToArray } from '../../utils';
 import { getAllElements } from '../../Main/GetElement';
 import { RenderElementNew } from '../../Main/RenderElement';
-//import { currencyRatesValidNames } from '../../data';
 
 export class DropdownList extends MainDropdown {
   private listClass: string;

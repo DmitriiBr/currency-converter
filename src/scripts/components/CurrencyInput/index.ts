@@ -1,13 +1,23 @@
-import { currencyRates } from '../../data';
+// import { currencyRates } from '../../data';
+import { getAllElements } from '../../Main/GetElement';
 import { RenderElementNew } from '../../Main/RenderElement';
+import { Store } from '../../store';
+import { currencyRatesToArray } from '../../utils';
 
 let inputID = -1;
 
+const convertCurrencies = (from: number, to: number): number => {
+  const result = to / from;
+  return result;
+};
+
 export class MainCurrencyInput {
-  protected mainClass: string;
+  private mainClass: string;
+  private inputFieldClass: string;
 
   constructor(mainClass: string) {
     this.mainClass = mainClass;
+    this.inputFieldClass = `${mainClass}__field`;
   }
 
   render(): Node {
@@ -16,9 +26,9 @@ export class MainCurrencyInput {
       tagName: 'input',
       type: 'number',
       className: [
-        `${this.mainClass}__field`,
-        `${this.mainClass}__field--currency`,
-        `${this.mainClass}__field--id_${inputID}`
+        this.inputFieldClass,
+        `${this.inputFieldClass}--currency`,
+        `${this.inputFieldClass}--id_${inputID}`
       ],
       dataset: {
         'input-id': String(inputID)
@@ -34,26 +44,37 @@ export class MainCurrencyInput {
     return element.render();
   }
 
-  elements(): NodeListOf<HTMLInputElement> {
-    const inputElements = document.querySelectorAll(`.${this.mainClass}__field`);
-    return (inputElements as NodeListOf<HTMLInputElement>);
-  }
-
-  // Create convert functional to inputs bm 2 - 3 methods more
-  // Self
+  // Convert functional
+  // 
   addListenerConvert() {
-    const inputElements = this.elements();
-    console.log(currencyRates);
+    const allInputElements: NodeListOf<Element> = getAllElements(this.inputFieldClass);
 
-    inputElements.forEach(<T extends HTMLInputElement>(elem: T) => {
-      elem.addEventListener('input', <U extends Event>(e: U) => {
+    allInputElements.forEach(<T extends Element>(elem: T) => {
+      elem.addEventListener('input', <U extends Event>(e: U): void => {
         const { target } = e;
 
         if (target instanceof HTMLElement) {
-          console.log(target.dataset.inputId);
+          console.log(Store.choosedItemID, Store.choosedItemName);
         }
       });
     });
-    return 0;
+  }
+
+  // Refactor this basic convert to ability for expanding functional
+  // It must be converting to any side
+  addListenerBasicConvert() {
+    const allInputElements: NodeListOf<Element> = getAllElements(this.inputFieldClass);
+    const data = currencyRatesToArray();
+
+    if (allInputElements) {
+      allInputElements[0].addEventListener('input', () => {
+        if (allInputElements[1] instanceof HTMLInputElement && allInputElements[0] instanceof HTMLInputElement) {
+          allInputElements[1].value = Number(String(convertCurrencies(
+            data[Store.choosedItemID[0]][1],
+            data[Store.choosedItemID[1]][1],
+          ) * Number(allInputElements[0].value))).toFixed(2);
+        }
+      });
+    }
   }
 }
