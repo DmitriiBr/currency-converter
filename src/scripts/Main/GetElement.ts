@@ -1,9 +1,9 @@
-export const getElement = (className: string) => {
-  const element = document.querySelector(`.${className}`);
+export const getElement = (selector: string) => {
+  const element = document.querySelector(`.${selector}`);
   return element;
 };
 
-export const getAllElements = (className: string) => {
-  const elements = document.querySelectorAll(`.${className}`);
+export const getAllElements = (selector: string) => {
+  const elements = document.querySelectorAll(`.${selector}`);
   return elements;
 };

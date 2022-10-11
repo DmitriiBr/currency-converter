@@ -1,7 +1,7 @@
 import '../styles/index.scss';
 import { MainCurrencyInput } from './components/CurrencyInput';
 import { Dropdown } from './components/Dropdown/Dropdown';
-import { RenderElement } from './Main/RenderElement';
+import { RenderElementNew } from './Main/RenderElement';
 
 // TODO:
 // Try to implement input functional to the App
@@ -18,35 +18,40 @@ class App {
   private currencyInput = new MainCurrencyInput('input');
 
   public render() {
-    const convertFrom = new RenderElement({
+    const convertFrom = new RenderElementNew({
       tagName: 'div',
       className: ['container', 'container__convert-from'],
       inner: [this.dropdown.render(), this.currencyInput.render()]
     });
 
-    const convertTo = new RenderElement({
+    const convertTo = new RenderElementNew({
       tagName: 'div',
       className: ['container', 'container__convert-to'],
       inner: [this.dropdown.render(), this.currencyInput.render()]
     });
 
-    return `
-      <div class="${this.appClass}">
-        ${convertFrom.render()}
-        ${convertTo.render()}
-      </div>
-    `;
+    const element = new RenderElementNew({
+      tagName: 'div',
+      className: [this.appClass],
+      inner: [convertFrom.render(), convertTo.render()]
+    });
+
+    return element.render();
   }
 
   public addListeners() {
-    this.dropdown.addListeners();
-    this.currencyInput.addListenerConvert();
+    if (this.dropdown) {
+      this.dropdown.addListeners();
+      this.currencyInput.addListenerConvert();
+    }
   }
 }
 
 const main = document.querySelector('.main');
 const app = new App();
 
-main?.insertAdjacentHTML('afterbegin', app.render());
-
-app.addListeners();
+// main?.insertAdjacentHTML('afterbegin', app.render());
+if (app) {
+  main?.append(app.render() || 'not appended mistake');
+  app.addListeners();
+}

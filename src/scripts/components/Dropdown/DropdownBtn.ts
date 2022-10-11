@@ -1,8 +1,8 @@
 import { DropdownTitle } from './DropdownTitle';
-import { DropdownArrow } from './DropdownArrow';
+// import { DropdownArrow } from './DropdownArrow';
 import { DropdownList } from './DropdownList';
 import { dropdownID } from './Dropdown';
-import { RenderElement } from '../../Main/RenderElement';
+import { RenderElementNew } from '../../Main/RenderElement';
 import { getAllElements } from '../../Main/GetElement';
 
 
@@ -15,14 +15,14 @@ export class DropdownBtn {
     this.mainClass = mainClass;
   }
 
-  render(): string {
-    const title = new DropdownTitle(this.mainClass);
-    const arrow = new DropdownArrow(this.mainClass);
+  render(): Node {
+    const title = new DropdownTitle(this.mainClass).render();
+    // const arrow = new DropdownArrow(this.mainClass);
 
-    const element = new RenderElement({
+    const element = new RenderElementNew({
       tagName: 'button',
-      className: [`${this.btnClass}, ${this.btnClass}--id_${dropdownID}`],
-      inner: [title.render(), arrow.render()]
+      className: [this.btnClass, `${this.btnClass}--id_${dropdownID}`],
+      inner: [title]
     });
 
     return element.render();

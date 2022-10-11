@@ -5,8 +5,8 @@ import { dropdownID } from './Dropdown';
 import { currencyRatesToArray } from '../../utils';
 import { getAllElements } from '../../Main/GetElement';
 import { classAdd, classRemove, IChangableElementByClass } from '../../Main/ChangeElementClass';
-import { RenderElement } from '../../Main/RenderElement';
-//import { currencyRatesValidNames } from '../../data';
+import { RenderElementNew } from '../../Main/RenderElement';
+import { currencyRatesValidNames } from '../../data';
 
 export class DropdownListItem {
   private listItemClass: string;
@@ -15,8 +15,8 @@ export class DropdownListItem {
     this.listItemClass = `${listClass}--item`;
   }
 
-  render({ text, index }: IDropdownListItem, key: number): string {
-    const listItemElement = new RenderElement({
+  render({ text, index }: IDropdownListItem, key: number): Node {
+    const element = new RenderElementNew({
       tagName: 'li',
       className: [this.listItemClass, `${this.listItemClass}--id_${dropdownID}`],
       dataset: {
@@ -24,10 +24,10 @@ export class DropdownListItem {
         'key': String(key),
         'translate-value': `${index * 100}%`
       },
-      inner: text
+      inner: text + ' ' + currencyRatesValidNames[key]
     });
 
-    return listItemElement.render();
+    return element.render();
   }
 
   addListenerChooseItem() {
@@ -42,21 +42,20 @@ export class DropdownListItem {
       elem.addEventListener('click', () => {
         if (elem instanceof HTMLElement) {
           const currentIndex = index % listData.length;
-          const dropdownID = Number(elem.dataset.dropdownListItemId);
+          const dropdownListItemID = Number(elem.dataset.dropdownListItemId);
           const currentName = listData[currentIndex][0];
 
           const currentItem: IChangableElementByClass = {
-            elementClassName: `${this.listItemClass}--id_${dropdownID}`,
+            elementClassName: `${this.listItemClass}--id_${dropdownListItemID}`,
             changableClassName: highlight,
             index: currentIndex,
           };
 
           classRemove({ ...currentItem, all: true });
           classAdd(currentItem);
-          console.log(currentName);
 
-          dropdownTitle.elements(dropdownID).textContent = currentName;
-          dropdownList.toggleList(dropdownID);
+          dropdownTitle.elements(dropdownListItemID).textContent = currentName;
+          dropdownList.toggleList(dropdownListItemID);
         }
       });
     });

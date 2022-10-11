@@ -1,20 +1,24 @@
+import { RenderElementNew } from '../../Main/RenderElement';
 import { dropdownID } from './Dropdown';
 
 export class DropdownTitle {
-  private titleClass: string | undefined;
+  private titleClass: string;
 
   constructor(mainClass?: string) {
     this.titleClass = `${mainClass}__title`;
   }
 
-  render() {
-    return `
-      <span class="${this.titleClass} ${this.titleClass}--id_${dropdownID}"
-        data-dropdown-title-id="${dropdownID}"
-      >
-        Choose currency
-      </span>
-    `;
+  render(): Node {
+    const element = new RenderElementNew({
+      tagName: 'span',
+      className: [this.titleClass, `${this.titleClass}--id_${dropdownID}`],
+      inner: 'Choose currency',
+      dataset: {
+        'dropdown-title-id': String(dropdownID)
+      }
+    });
+
+    return element.render();
   }
 
   elements(i = 0) {

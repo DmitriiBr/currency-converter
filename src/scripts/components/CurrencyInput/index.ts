@@ -1,4 +1,6 @@
 import { currencyRates } from '../../data';
+import { RenderElementNew } from '../../Main/RenderElement';
+
 let inputID = -1;
 
 export class MainCurrencyInput {
@@ -8,18 +10,28 @@ export class MainCurrencyInput {
     this.mainClass = mainClass;
   }
 
-  render() {
+  render(): Node {
     inputID++;
-    return `
-      <div class="${this.mainClass}__wrapper">
-        <input 
-          type="number" 
-          class="${this.mainClass}__field 
-          ${this.mainClass}__field--currency ${this.mainClass}__field--id_${inputID}"
-          data-input-id="${inputID}"
-        >
-      </div>
-    `;
+    const input = new RenderElementNew({
+      tagName: 'input',
+      type: 'number',
+      className: [
+        `${this.mainClass}__field`,
+        `${this.mainClass}__field--currency`,
+        `${this.mainClass}__field--id_${inputID}`
+      ],
+      dataset: {
+        'input-id': String(inputID)
+      }
+    });
+
+    const element = new RenderElementNew({
+      tagName: 'div',
+      className: [`${this.mainClass}__wrapper`],
+      inner: [input.render()]
+    });
+
+    return element.render();
   }
 
   elements(): NodeListOf<HTMLInputElement> {

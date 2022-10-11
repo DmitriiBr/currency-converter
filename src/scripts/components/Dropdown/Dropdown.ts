@@ -1,4 +1,4 @@
-import { RenderElement } from '../../Main/RenderElement';
+import { RenderElementNew } from '../../Main/RenderElement';
 import { DropdownBtn } from './DropdownBtn';
 import { DropdownList } from './DropdownList';
 
@@ -6,27 +6,24 @@ export let dropdownID = -1;
 
 export class Dropdown {
   public mainClass: string;
+
   constructor(mainClass: string) {
     this.mainClass = mainClass;
   }
 
   public render() {
-    if (this.mainClass) {
-      const list = new DropdownList(this.mainClass);
-      const btn = new DropdownBtn(this.mainClass);
+    const btn = new DropdownBtn(this.mainClass);
+    const list = new DropdownList(this.mainClass);
 
-      dropdownID++;
+    dropdownID++;
 
-      const element = new RenderElement({
-        tagName: 'div',
-        className: [this.mainClass, `${this.mainClass}--id_${dropdownID}`],
-        inner: [btn.render(), list.render()]
-      });
+    const element = new RenderElementNew({
+      tagName: 'div',
+      className: [this.mainClass, `${this.mainClass}--id_${dropdownID}`],
+      inner: [btn.render(), list.render()]
+    });
 
-      return element.render();
-    } else {
-      throw new Error('Not main class inside dropdown');
-    }
+    return element.render();
   }
 
   addListeners() {

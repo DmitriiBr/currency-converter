@@ -2,39 +2,56 @@ interface IDataset {
   [key: string]: string
 }
 
+interface IActions {
+  [key: string]: () => void;
+}
+
 export interface IElement {
   tagName: string
   className: string[]
-  inner: string[] | string
+  inner?: Node[] | string
+  type?: string
   dataset?: IDataset
+  actions?: IActions
 }
 
-export class RenderElement {
+export class RenderElementNew {
   private tagName: string;
   private className: string[];
-  private inner: string[] | string;
+  private inner: Node[] | string | undefined;
   private dataset: IDataset | undefined;
+  private actions: IActions | undefined;
 
-  constructor({ tagName, className, inner, dataset }: IElement) {
+  constructor({ tagName, className, inner, dataset, actions }: IElement) {
     this.tagName = tagName;
     this.className = className;
     this.inner = inner;
     this.dataset = dataset;
+    this.actions = actions;
   }
 
-  render(): string {
-    const classNames = this.className.join(' ').replace(',', '');
-    const innerStringified = Array.isArray(this.inner) ? this.inner.join('').replace(',', '') : this.inner;
-    const dataAttributes = this.dataset
-      ? Object.entries(this.dataset).map(elem => `data-${elem[0]}="${elem[1]}"`).join(' ')
-      : null;
+  render(): Node {
+    const element = document.createElement(this.tagName);
+    element.classList.add(...this.className);
 
-    const markup = `
-      <${this.tagName} class="${classNames}" ${dataAttributes}>
-        ${innerStringified}
-      </${this.tagName}>
-    `;
+    for (const key in this.dataset) {
+      element.setAttribute(`data-${key}`, this.dataset[key]);
+    }
 
-    return markup;
+    if (typeof this.inner === 'string') {
+      element.append(this.inner);
+    } else {
+      this.inner && element.append(...this.inner);
+    }
+
+    if (this.actions) {
+      Object.keys(this.actions).forEach(action => {
+        if (this.actions) {
+          element.addEventListener(action, this.actions[action]);
+        }
+      });
+    }
+
+    return element;
   }
 }
