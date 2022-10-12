@@ -24,14 +24,4 @@ export class Dropdown {
 
     return element.render();
   }
-
-  addListeners() {
-    if (this.mainClass) {
-      // const list = new DropdownList(this.mainClass);
-
-      // list.addAllListeners();
-    } else {
-      throw new Error('No main class inside addListeners');
-    }
-  }
 }
