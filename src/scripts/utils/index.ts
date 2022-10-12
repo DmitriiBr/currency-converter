@@ -7,3 +7,11 @@ export const elementGuard = (elem: HTMLElement | null): boolean => {
 export const currencyRatesToArray = () => {
   return Object.entries(currencyRates.rates);
 };
+
+export const shortString = (str: string): string => {
+  if (str.length > 22) {
+    return str.slice(0, 22) + '...';
+  } else {
+    return str;
+  }
+};

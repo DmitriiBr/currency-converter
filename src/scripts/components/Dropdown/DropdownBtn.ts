@@ -3,7 +3,6 @@ import { DropdownTitle } from './DropdownTitle';
 import { DropdownList } from './DropdownList';
 import { dropdownID } from './Dropdown';
 import { RenderElementNew } from '../../Main/RenderElement';
-import { getAllElements } from '../../Main/GetElement';
 
 
 export class DropdownBtn {
@@ -22,21 +21,18 @@ export class DropdownBtn {
     const element = new RenderElementNew({
       tagName: 'button',
       className: [this.btnClass, `${this.btnClass}--id_${dropdownID}`],
-      inner: [title]
+      inner: [title],
+      actions: {
+        click: this.handleToggle(dropdownID)
+      }
     });
 
     return element.render();
   }
 
-  addListenerToggle(): void {
+  handleToggle(index: number) {
     const dropdownList = new DropdownList(this.mainClass);
-    const btnElements: NodeListOf<Element> = getAllElements(this.btnClass);
-
-    btnElements.forEach((elem, index) => {
-      elem.addEventListener('click', () => {
-        dropdownList.toggleList(index);
-      });
-    });
+    return (e?: Event) => dropdownList.toggleList(index);
   }
 }
 

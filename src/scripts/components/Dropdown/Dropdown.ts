@@ -27,10 +27,9 @@ export class Dropdown {
 
   addListeners() {
     if (this.mainClass) {
-      const list = new DropdownList(this.mainClass);
-      const btn = new DropdownBtn(this.mainClass);
-      btn.addListenerToggle();
-      list.addAllListeners();
+      // const list = new DropdownList(this.mainClass);
+
+      // list.addAllListeners();
     } else {
       throw new Error('No main class inside addListeners');
     }

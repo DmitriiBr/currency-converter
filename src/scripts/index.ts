@@ -40,11 +40,7 @@ class App {
   }
 
   public addListeners() {
-    if (this.dropdown) {
-      this.dropdown.addListeners();
-      // this.currencyInput.addListenerConvert();
-      this.currencyInput.addListenerBasicConvert();
-    }
+    this.currencyInput.addListenerBasicConvert();
   }
 }
 

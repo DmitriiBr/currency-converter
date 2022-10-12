@@ -26,6 +26,8 @@
         "quotes": [
             "warn",
             "single"
-        ]
+        ],
+        "no-unused-vars": "off",
+        "@typescript-eslint/no-unused-vars": 0
     }
 }
