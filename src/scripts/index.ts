@@ -3,15 +3,6 @@ import { MainCurrencyInput } from './components/CurrencyInput';
 import { Dropdown } from './components/Dropdown/Dropdown';
 import { RenderElementNew } from './Main/RenderElement';
 
-// TODO:
-// Try to implement input functional to the App
-
-// TODO:
-// Try to implement sccrolling into dropdown menu with overflow
-// Currency converting functional insite inputs
-// Styles refactoring
-// Create dropdown map with russian currency names
-
 class App {
   private appClass = 'app';
   private dropdown = new Dropdown('dropdown');
@@ -38,17 +29,11 @@ class App {
 
     return element.render();
   }
-
-  public addListeners() {
-    this.currencyInput.addListenerBasicConvert();
-  }
 }
 
 const main = document.querySelector('.main');
 const app = new App();
 
-// main?.insertAdjacentHTML('afterbegin', app.render());
 if (app) {
   main?.append(app.render() || 'not appended mistake');
-  app.addListeners();
 }

@@ -1,9 +1,15 @@
 interface IStore {
-  choosedItemName: [string, string]
+  choosedItemRates: [number, number]
   choosedItemID: [number, number]
+  choosedItemValues: [number, number],
+  convertedValues: [number, number]
+  fullValues: [number, number]
 }
 
 export const Store: IStore = {
-  choosedItemName: ['', ''],
-  choosedItemID: [0, 0]
+  choosedItemRates: [0, 0],
+  choosedItemID: [0, 0],
+  choosedItemValues: [0, 0],
+  convertedValues: [0, 0],
+  fullValues: [0, 0]
 };

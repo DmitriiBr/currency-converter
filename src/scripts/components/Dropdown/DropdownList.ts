@@ -1,7 +1,7 @@
 import { DropdownListItem } from './DropdownListItem';
 import { dropdownID } from './Dropdown';
 import { currencyRatesToArray } from '../../utils';
-import { getAllElements, getElement } from '../../Main/GetElement';
+import { getAllElements } from '../../Main/GetElement';
 import { RenderElementNew } from '../../Main/RenderElement';
 
 export class DropdownList {

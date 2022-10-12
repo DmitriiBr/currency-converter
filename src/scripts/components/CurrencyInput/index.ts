@@ -32,49 +32,47 @@ export class MainCurrencyInput {
       ],
       dataset: {
         'input-id': String(inputID)
+      },
+      actions: {
+        input: this.handleConvert(inputID)
       }
     });
 
-    const element = new RenderElementNew({
+    const inputWrapper = new RenderElementNew({
       tagName: 'div',
       className: [`${this.mainClass}__wrapper`],
       inner: [input.render()]
     });
 
-    return element.render();
+    return inputWrapper.render();
   }
 
-  // Convert functional
-  // 
-  addListenerConvert() {
-    const allInputElements: NodeListOf<Element> = getAllElements(this.inputFieldClass);
+  handleConvert(inputID: number) {
+    return (e?: Event, element?: Element) => {
+      if (element instanceof HTMLInputElement) {
+        Store.choosedItemValues[inputID] = Number(element.value);
 
-    allInputElements.forEach(<T extends Element>(elem: T) => {
-      elem.addEventListener('input', <U extends Event>(e: U): void => {
-        const { target } = e;
+        const value = Store.choosedItemValues[inputID];
+        const rate = Store.choosedItemRates[inputID];
+        const fullValue = (value / rate).toFixed(2);
 
-        if (target instanceof HTMLElement) {
-          console.log(Store.choosedItemID, Store.choosedItemName);
-        }
-      });
-    });
-  }
+        Store.fullValues[inputID] = Number(fullValue);
 
-  // Refactor this basic convert to ability for expanding functional
-  // It must be converting to any side
-  addListenerBasicConvert() {
-    const allInputElements: NodeListOf<Element> = getAllElements(this.inputFieldClass);
-    const data = currencyRatesToArray();
+        Store.fullValues.forEach((val, i) => {
+          const elem: HTMLInputElement | Element = getAllElements(this.inputFieldClass)[i];
 
-    if (allInputElements) {
-      allInputElements[0].addEventListener('input', () => {
-        if (allInputElements[1] instanceof HTMLInputElement && allInputElements[0] instanceof HTMLInputElement) {
-          allInputElements[1].value = Number(String(convertCurrencies(
-            data[Store.choosedItemID[0]][1],
-            data[Store.choosedItemID[1]][1],
-          ) * Number(allInputElements[0].value))).toFixed(2);
-        }
-      });
-    }
+          if (elem instanceof HTMLInputElement) {
+            if (i === inputID) {
+              Store.convertedValues[i] = value;
+              elem.value = String(value);
+            } else {
+              const convertedValue = Store.choosedItemRates[i] / rate;
+              Store.convertedValues[i] = convertedValue * (value);
+              elem.value = Store.convertedValues[i].toFixed(2);
+            }
+          }
+        });
+      }
+    };
   }
 }

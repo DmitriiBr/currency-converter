@@ -2,7 +2,7 @@ import { IDropdownListItem } from '../../data/types';
 import { DropdownList } from './DropdownList';
 import { DropdownTitle } from './DropdownTitle';
 import { dropdownID } from './Dropdown';
-import { shortString } from '../../utils';
+import { currencyRatesToArray, shortString } from '../../utils';
 import { getAllElements } from '../../Main/GetElement';
 import { classAdd, classRemove, IChangableElementByClass } from '../../Main/ChangeElementClass';
 import { RenderElementNew } from '../../Main/RenderElement';
@@ -58,7 +58,7 @@ export class DropdownListItem {
       dropdownList.toggleList(dropdownID);
 
       Store.choosedItemID[dropdownID] = key;
-      Store.choosedItemName[dropdownID] = currencyName;
+      Store.choosedItemRates[dropdownID] = currencyRatesToArray()[key][1];
     };
   }
 }
