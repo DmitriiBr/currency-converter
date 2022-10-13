@@ -49,6 +49,19 @@
     border-radius: var(--border-radius);
     font-size: var(--font-size);
     list-style: none;
+    height: 250px;
+    overflow: auto;
+
+    &::-webkit-scrollbar {
+      width: 4px;
+      border-top-right-radius: var(--border-radius);
+      border-bottom-right-radius: var(--border-radius);
+    }
+
+    &::-webkit-scrollbar-thumb {
+      background: var(--secondary-color);
+      border-radius: var(--border-radius);
+    }
 
     &--wrapper {
       position: absolute;
@@ -74,12 +87,12 @@
       top: 0;
       bottom: 0;
       right: 0;
-      left: 0;
+      left: 2%;
       z-index: -1;
-      opacity: 0.5;
-      background: rgb(156, 156, 156);
+      background: var(--secondary-color);
       border-radius: var(--border-radius);
       height: var(--list-item-height);
+      width: 96%;
       transform: translateY(var(--translate-value));
       transition: all var(--transition-time) cubic-bezier(.17, .67, .57, 1.51);
       pointer-events: none;

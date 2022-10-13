@@ -18,7 +18,17 @@ export const currencyRatesValidNames = [
   'Argentine Peso',
   'Australian Dollar',
   'Russian Rouble',
-  'Euro'
+  'Euro',
+  'United Arab Emirates Dirham',
+  'Afghan Afghani',
+  'Albanian Lek',
+  'Armenian Dram',
+  'Netherlands Antillean Guilder',
+  'Angolan Kwanza equals',
+  'Argentine Peso',
+  'Australian Dollar',
+  'Russian Rouble',
+  'Euro',
 ];
 
 export const currencyRates: ICurrencyRates = {
@@ -33,6 +43,16 @@ export const currencyRates: ICurrencyRates = {
     'ARS': 99.2347,
     'AUD': 1.338279,
     'RUB': 62.501,
-    'EUR': 1.0262
+    'EUR': 1.0262,
+    'AED1': 3.67297,
+    'AFN1': 89.647021,
+    'ALL1': 104.709024,
+    'AMD1': 476.665393,
+    'ANG1': 1.789593,
+    'AOA1': 597.455,
+    'ARS1': 99.2347,
+    'AUD1': 1.338279,
+    'RUB1': 62.501,
+    'EUR1': 1.0262
   }
 };
