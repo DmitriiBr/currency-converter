@@ -8,6 +8,7 @@ import { classAdd, classRemove, IChangableElementByClass } from '../../Main/Chan
 import { RenderElementNew } from '../../Main/RenderElement';
 import { currencyRatesValidNames } from '../../data';
 import { Store } from '../../store';
+import { MainCurrencyInput } from '../CurrencyInput';
 
 export class DropdownListItem {
   private listItemClass: string;
@@ -19,14 +20,14 @@ export class DropdownListItem {
   render({ text, index }: IDropdownListItem, key: number): Node {
     const currencyName = text + ' - ' + currencyRatesValidNames[key];
 
-    const element = new RenderElementNew({
+    const listItemElement = new RenderElementNew({
       tagName: 'li',
       className: [this.listItemClass, `${this.listItemClass}--id_${dropdownID}`],
       dataset: {
         'key': String(key),
         'translate-value': `${index * 100}%`
       },
-      inner: shortString(currencyName),
+      inner: `<strong>${text}&nbsp;</strong>- ${shortString(currencyName).slice(5, currencyName.length)}`,
       attributes: {
         title: currencyName
       },
@@ -35,7 +36,7 @@ export class DropdownListItem {
       }
     });
 
-    return element.render();
+    return listItemElement.render();
   }
 
   handleChooseItem(dropdownID: number, listItemClass: string, key: number, currencyName: string) {
@@ -43,6 +44,7 @@ export class DropdownListItem {
     const dropdownTitle = new DropdownTitle(mainClass);
     const dropdownList = new DropdownList(mainClass);
     const highlight = `${this.listItemClass}--highlight`;
+    const currencyInput = new MainCurrencyInput('input');
 
     return (e?: Event) => {
       const currentItem: IChangableElementByClass = {
@@ -50,6 +52,7 @@ export class DropdownListItem {
         changableClassName: highlight,
         index: key,
       };
+      const allInputElements = getAllElements(currencyInput.getClass());
 
       classRemove({ ...currentItem, all: true });
       classAdd(currentItem);
@@ -59,6 +62,12 @@ export class DropdownListItem {
 
       Store.choosedItemID[dropdownID] = key;
       Store.choosedItemRates[dropdownID] = currencyRatesToArray()[key][1];
+
+      allInputElements.forEach((elem, index) => {
+        if (elem instanceof HTMLInputElement && index !== dropdownID) {
+          currencyInput.handleConvert(index)(e, elem);
+        }
+      });
     };
   }
 }

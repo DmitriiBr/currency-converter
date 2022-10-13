@@ -8,6 +8,10 @@ export class DropdownTitle {
     this.titleClass = `${mainClass}__title`;
   }
 
+  getClass() {
+    return this.titleClass;
+  }
+
   render(): Node {
     const element = new RenderElementNew({
       tagName: 'span',
@@ -19,14 +23,5 @@ export class DropdownTitle {
     });
 
     return element.render();
-  }
-
-  elements(i = 0) {
-    const titleELements = document.querySelectorAll(`.${this.titleClass}`);
-    return titleELements[i];
-  }
-
-  getClass() {
-    return this.titleClass;
   }
 }

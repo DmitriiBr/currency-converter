@@ -58,7 +58,7 @@ export class RenderElementNew {
   private appendInner(element: Element, inner: Inner | undefined) {
     if (inner) {
       if (typeof inner === 'string') {
-        element.append(inner);
+        element.innerHTML += inner;
       } else {
         this.inner && element.append(...inner);
       }
