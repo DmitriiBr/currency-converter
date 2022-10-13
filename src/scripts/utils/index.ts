@@ -9,8 +9,8 @@ export const currencyRatesToArray = () => {
 };
 
 export const shortString = (str: string): string => {
-  if (str.length > 22) {
-    return str.slice(0, 22) + '...';
+  if (str.length > 21) {
+    return str.slice(0, 21) + '...';
   } else {
     return str;
   }

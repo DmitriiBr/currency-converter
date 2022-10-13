@@ -101,8 +101,9 @@
     &--item {
       height: var(--list-item-height);
       display: flex;
-      justify-content: center;
+      justify-content: left;
       align-items: center;
+      padding-left: 10px;
       color: var(--text-color);
       border-radius: var(--border-radius);
       transition: all var(--transition-time) ease-in;
@@ -110,7 +111,7 @@
 
       &--highlight {
         background-color: var(--list-item-highlight);
-        // font-size: calc(var(--font-size) + 4px);
+        font-size: calc(var(--font-size) + 2px);
       }
 
       &:hover {
