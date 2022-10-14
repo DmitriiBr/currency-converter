@@ -86,8 +86,8 @@
       position: absolute;
       top: 0;
       bottom: 0;
-      right: 0;
-      left: 2%;
+      right: 2%;
+      left: 0;
       z-index: -1;
       background: var(--secondary-color);
       border-radius: var(--border-radius);
@@ -103,7 +103,7 @@
       display: flex;
       justify-content: left;
       align-items: center;
-      padding-left: 10px;
+      padding-left: 5px;
       color: var(--text-color);
       border-radius: var(--border-radius);
       transition: all var(--transition-time) ease-in;
@@ -111,7 +111,6 @@
 
       &--highlight {
         background-color: var(--list-item-highlight);
-        font-size: calc(var(--font-size) + 2px);
       }
 
       &:hover {

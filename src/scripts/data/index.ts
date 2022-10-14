@@ -6,7 +6,7 @@ export const currencyRatesValidNames = [
   'Albanian Lek',
   'Armenian Dram',
   'Netherlands Antillean Guilder',
-  'Angolan Kwanza equals',
+  'Angolan Kwanza',
   'Argentine Peso',
   'Australian Dollar',
   'Russian Rouble',

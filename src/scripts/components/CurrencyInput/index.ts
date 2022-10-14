@@ -1,7 +1,6 @@
 import { getAllElements } from '../../utils';
 import { RenderElement } from '../../Main/RenderElement';
 import { Store } from '../../store';
-import { ConvertionsTitle } from '../ConvertionsTitle/ConvertionsTitle';
 
 let inputID = -1;
 
@@ -47,7 +46,6 @@ export class MainCurrencyInput {
   }
 
   handleConvert(inputID: number) {
-    const convertionsTitlte = new ConvertionsTitle();
 
     return (e?: Event, element?: Element): void => {
       if (element instanceof HTMLInputElement) {
@@ -56,7 +54,6 @@ export class MainCurrencyInput {
         const allInputElements = getAllElements(this.inputFieldClass);
         const value = Store.choosedItemValues[inputID];
         const rate = Store.choosedItemRates[inputID];
-
 
         Store.convertedValues.forEach((storeValue, i) => {
           const exactInput: HTMLInputElement | Element = allInputElements[i];
@@ -74,7 +71,6 @@ export class MainCurrencyInput {
             }
           }
         });
-        convertionsTitlte.updateTitle();
       }
     };
   }

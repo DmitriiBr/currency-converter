@@ -3,13 +3,15 @@
   transform: translateY(-50px);
   opacity: 0;
   transition: all var(--transition-time) ease-in-out;
+  font-size: var(--font-size);
+  font-weight: 200;
   color: var(--text-color);
 
   &__span {
 
     &--currency {
       font-size: 20px;
-      font-weight: 100;
+      font-weight: 300;
     }
 
     &--value {

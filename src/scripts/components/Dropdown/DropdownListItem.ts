@@ -8,6 +8,7 @@ import { RenderElement } from '../../Main/RenderElement';
 import { currencyRatesValidNames } from '../../data';
 import { Store } from '../../store';
 import { MainCurrencyInput } from '../CurrencyInput';
+import { ConvertionsTitle } from '../ConvertionsTitle/ConvertionsTitle';
 
 export class DropdownListItem {
   private listItemClass: string;
@@ -53,6 +54,7 @@ export class DropdownListItem {
     const dropdownList = new DropdownList(mainClass);
     const highlight = `${this.listItemClass}--highlight`;
     const currencyInput = new MainCurrencyInput('input');
+    const convertionsTitlte = new ConvertionsTitle();
 
     return (e?: Event) => {
       const currentItem: IChangableElementByClass = {
@@ -77,6 +79,7 @@ export class DropdownListItem {
           currencyInput.handleConvert(index)(e, elem);
         }
       });
+      convertionsTitlte.updateTitle();
     };
   }
 }

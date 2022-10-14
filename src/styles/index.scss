@@ -1,6 +1,6 @@
 :root {
   box-sizing: border-box;
-  font-family: apple-system, Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+  font-family: 'Montserrat';
 }
 
 body {
@@ -11,7 +11,7 @@ body {
   --text-color: rgb(51, 51, 51);
   --font-size: 14px;
   --list-item-height: 30px;
-  --list-item-highlight: rgba(0, 149, 255, 0.1);
+  --list-item-highlight: rgba(0, 149, 255, 0.3);
   --transition-time: 0.2s;
   --box-shadow: 0px 5px 10px 2px rgba(34, 60, 80, 0.2);
   --box-shadow-focus: 0px 0px 12px 0px rgba(0, 150, 255, 0.5);
@@ -24,6 +24,12 @@ body {
   border: none;
   background-color: inherit;
 }
+
+input,
+button {
+  font-family: 'Montserrat';
+}
+
 
 @import './components/nullify.scss';
 @import './components/main.scss';

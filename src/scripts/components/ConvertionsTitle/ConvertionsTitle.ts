@@ -13,8 +13,11 @@ export class ConvertionsTitle {
       className: [this.mainClass],
       inner: `
         <span class="${this.titleSpanValue}"></span>
+        &nbsp;
         <span class="${this.titleSpanCurrencyName}"></span>
+        &nbsp;equals to:&nbsp; 
         <span class="${this.titleSpanValue}"></span>
+        &nbsp;
         <span class="${this.titleSpanCurrencyName}"></span>
       `,
     });
@@ -41,9 +44,9 @@ export class ConvertionsTitle {
           }, 400);
         }).then(() => {
           titleSpansValue[0].textContent = '1';
-          titleSpansCurrencyNames[0].textContent = `${nameFrom} equals to: `;
+          titleSpansCurrencyNames[0].textContent = `${nameFrom}`;
           titleSpansValue[1].textContent = convertedToValue.toFixed(2);
-          titleSpansCurrencyNames[1].textContent = ` ${nameTo}`;
+          titleSpansCurrencyNames[1].textContent = `${nameTo}`;
         });
       }
     }
