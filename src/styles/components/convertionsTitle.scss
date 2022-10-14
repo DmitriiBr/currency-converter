@@ -1,0 +1,25 @@
+.title {
+  margin-bottom: 10px;
+  transform: translateY(-50px);
+  opacity: 0;
+  transition: all var(--transition-time) ease-in-out;
+  color: var(--text-color);
+
+  &__span {
+
+    &--currency {
+      font-size: 20px;
+      font-weight: 100;
+    }
+
+    &--value {
+      font-size: 30px;
+      font-weight: 800;
+    }
+  }
+
+  &--show {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}

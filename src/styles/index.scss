@@ -8,7 +8,7 @@ body {
   --background-hover-color: rgba(186, 186, 186, 0.526);
   --border-radius: 10px;
   --border-primary: 1px solid rgba(0, 0, 0, 0.15);
-  --text-color: black;
+  --text-color: rgb(51, 51, 51);
   --font-size: 14px;
   --list-item-height: 30px;
   --list-item-highlight: rgba(0, 149, 255, 0.1);
@@ -29,3 +29,4 @@ body {
 @import './components/main.scss';
 @import './components/dropdown.scss';
 @import './components/input.scss';
+@import './components/convertionsTitle.scss'

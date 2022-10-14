@@ -53,26 +53,23 @@ export class MainCurrencyInput {
       if (element instanceof HTMLInputElement) {
         Store.choosedItemValues[inputID] = Number(element.value);
 
+        const allInputElements = getAllElements(this.inputFieldClass);
         const value = Store.choosedItemValues[inputID];
         const rate = Store.choosedItemRates[inputID];
-        const fullValue = (value / rate).toFixed(2);
 
-        const allInputElements = getAllElements(this.inputFieldClass);
 
-        if (Number(fullValue) !== Infinity) Store.fullValues[inputID] = Number(fullValue);
-
-        Store.fullValues.forEach((val, i) => {
+        Store.convertedValues.forEach((storeValue, i) => {
           const exactInput: HTMLInputElement | Element = allInputElements[i];
 
           if (exactInput instanceof HTMLInputElement) {
             if (i === inputID) {
-              Store.convertedValues[inputID] = value;
+              storeValue = value;
             } else {
-              const convertedValue = Store.choosedItemRates[i] / rate;
+              const finalRate = Store.choosedItemRates[i] / rate;
 
-              if (convertedValue && convertedValue !== Infinity) {
-                Store.convertedValues[i] = convertedValue * value;
-                exactInput.value = Store.convertedValues[i].toFixed(2);
+              if (finalRate && finalRate !== Infinity) {
+                storeValue = finalRate * value;
+                exactInput.value = storeValue.toFixed(2);
               }
             }
           }

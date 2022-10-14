@@ -3,8 +3,7 @@ interface IStore {
   choosedItemID: [number, number]
   choosedItemValues: [number, number],
   convertedValues: [number, number]
-  fullValues: [number, number]
-  staticValues: [number, number]
+  currencyNames: [string, string]
 }
 
 export const Store: IStore = {
@@ -12,6 +11,5 @@ export const Store: IStore = {
   choosedItemID: [0, 0],
   choosedItemValues: [0, 0],
   convertedValues: [0, 0],
-  fullValues: [0, 0],
-  staticValues: [1, 1]
+  currencyNames: ['', '']
 };

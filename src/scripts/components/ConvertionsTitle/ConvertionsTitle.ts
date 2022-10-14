@@ -1,22 +1,21 @@
 import { RenderElement } from '../../Main/RenderElement';
 import { Store } from '../../store';
-import { getElement } from '../../utils';
+import { getAllElements, getElement } from '../../utils';
 
 export class ConvertionsTitle {
   private mainClass = 'title';
-  private titleSpanFrom = `${this.mainClass}__span-from`;
-  private titleSpanTo = `${this.mainClass}__span-to`;
+  private titleSpanCurrencyName = `${this.mainClass}__span--currency`;
+  private titleSpanValue = `${this.mainClass}__span--value`;
 
   public render() {
-    const storeValues = Store.choosedItemRates;
-
     const titleElement = new RenderElement({
       tagName: 'h1',
       className: [this.mainClass],
       inner: `
-        <span class="${this.titleSpanFrom}">${storeValues[0]}</span> 
-          equals to: 
-        <span class="${this.titleSpanTo}">${storeValues[1]}</span>
+        <span class="${this.titleSpanValue}"></span>
+        <span class="${this.titleSpanCurrencyName}"></span>
+        <span class="${this.titleSpanValue}"></span>
+        <span class="${this.titleSpanCurrencyName}"></span>
       `,
     });
 
@@ -24,13 +23,29 @@ export class ConvertionsTitle {
   }
 
   updateTitle() {
-    const storeValues = Store.convertedValues;
-    const titleSpanFrom = getElement(this.titleSpanFrom);
-    const titleSpanTo = getElement(this.titleSpanTo);
+    const convertedToValue = Store.choosedItemRates[1] / Store.choosedItemRates[0];
+    const titleSpansValue = getAllElements(this.titleSpanValue);
+    const titleSpansCurrencyNames = getAllElements(this.titleSpanCurrencyName);
 
-    if (titleSpanFrom && titleSpanTo) {
-      titleSpanFrom.textContent = storeValues[0].toFixed(2);
-      titleSpanTo.textContent = storeValues[1].toFixed(2);
+    if (titleSpansCurrencyNames && convertedToValue !== Infinity) {
+      const nameFrom = Store.currencyNames[0].slice(5, 100);
+      const nameTo = Store.currencyNames[1].slice(5, 100);
+      const title = getElement(this.mainClass);
+
+      if (nameFrom && nameTo && title) {
+        title.classList.remove(`${this.mainClass}--show`);
+        new Promise(res => {
+          setTimeout(() => {
+            title.classList.add(`${this.mainClass}--show`);
+            res(1);
+          }, 400);
+        }).then(() => {
+          titleSpansValue[0].textContent = '1';
+          titleSpansCurrencyNames[0].textContent = `${nameFrom} equals to: `;
+          titleSpansValue[1].textContent = convertedToValue.toFixed(2);
+          titleSpansCurrencyNames[1].textContent = ` ${nameTo}`;
+        });
+      }
     }
   }
 

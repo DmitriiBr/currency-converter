@@ -70,6 +70,7 @@ export class DropdownListItem {
 
       Store.choosedItemID[dropdownID] = key;
       Store.choosedItemRates[dropdownID] = currencyRatesToArray()[key][1];
+      Store.currencyNames[dropdownID] = currencyName;
 
       allInputElements.forEach((elem, index) => {
         if (elem instanceof HTMLInputElement && index !== dropdownID) {
