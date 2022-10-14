@@ -1,11 +1,5 @@
-import { getAllElements } from './GetElement';
-
-export interface IChangableElementByClass {
-  elementClassName: string
-  changableClassName: string
-  index: number
-  all?: boolean
-}
+import { IChangableElementByClass } from '../types/types';
+import { getAllElements } from '../utils';
 
 export const classAdd = ({ elementClassName, changableClassName, index, all }: IChangableElementByClass): void => {
   if (all) {

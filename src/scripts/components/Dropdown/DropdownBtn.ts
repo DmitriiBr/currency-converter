@@ -1,9 +1,7 @@
 import { DropdownTitle } from './DropdownTitle';
-// import { DropdownArrow } from './DropdownArrow';
 import { DropdownList } from './DropdownList';
 import { dropdownID } from './Dropdown';
-import { RenderElementNew } from '../../Main/RenderElement';
-
+import { RenderElement } from '../../Main/RenderElement';
 
 export class DropdownBtn {
   private btnClass: string;
@@ -18,7 +16,7 @@ export class DropdownBtn {
     const title = new DropdownTitle(this.mainClass).render();
     // const arrow = new DropdownArrow(this.mainClass);
 
-    const element = new RenderElementNew({
+    const element = new RenderElement({
       tagName: 'button',
       className: [this.btnClass, `${this.btnClass}--id_${dropdownID}`],
       inner: [title],

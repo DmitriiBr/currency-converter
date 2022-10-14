@@ -1,8 +1,8 @@
 import { DropdownListItem } from './DropdownListItem';
 import { dropdownID } from './Dropdown';
-import { currencyRatesToArray } from '../../utils';
-import { getAllElements } from '../../Main/GetElement';
-import { RenderElementNew } from '../../Main/RenderElement';
+import { currencyRatesToArray, getAllElements } from '../../utils';
+import { RenderElement } from '../../Main/RenderElement';
+import { IDropdownListItem } from '../../types/types';
 
 export class DropdownList {
   private listClass: string;
@@ -15,17 +15,22 @@ export class DropdownList {
 
   render(): Node {
     const listData = currencyRatesToArray();
-    const listItems: Node[] = listData.map((_, key) => this.listItem.render(
-      { text: listData[key][0], index: key }, key));
+    const listItems: Node[] = listData.map((elem, key) => {
+      const item: IDropdownListItem = {
+        text: elem[0],
+        key
+      };
 
-    const list = new RenderElementNew({
+      return this.listItem.render(item);
+    });
+
+    const list = new RenderElement({
       tagName: 'ul',
       className: [this.listClass, `${this.listClass}--id_${dropdownID}`],
       inner: listItems,
-
     });
 
-    const wrapper = new RenderElementNew({
+    const wrapper = new RenderElement({
       tagName: 'div',
       className: [`${this.listClass}--wrapper`],
       inner: [list.render()],
@@ -55,9 +60,5 @@ export class DropdownList {
         }
       }
     };
-  }
-
-  addAllListeners() {
-    return 0;
   }
 }

@@ -1,11 +1,10 @@
-import { IDropdownListItem } from '../../data/types';
+import { IDropdownListItem, IChoosedItem, IChangableElementByClass } from '../../types/types';
 import { DropdownList } from './DropdownList';
 import { DropdownTitle } from './DropdownTitle';
 import { dropdownID } from './Dropdown';
-import { currencyRatesToArray, shortString } from '../../utils';
-import { getAllElements } from '../../Main/GetElement';
-import { classAdd, classRemove, IChangableElementByClass } from '../../Main/ChangeElementClass';
-import { RenderElementNew } from '../../Main/RenderElement';
+import { currencyRatesToArray, shortString, getAllElements } from '../../utils';
+import { classAdd, classRemove } from '../../Main/ChangeElementClass';
+import { RenderElement } from '../../Main/RenderElement';
 import { currencyRatesValidNames } from '../../data';
 import { Store } from '../../store';
 import { MainCurrencyInput } from '../CurrencyInput';
@@ -17,29 +16,38 @@ export class DropdownListItem {
     this.listItemClass = `${listClass}--item`;
   }
 
-  render({ text, index }: IDropdownListItem, key: number): Node {
+  render({ text, key }: IDropdownListItem): Node {
     const currencyName = text + ' - ' + currencyRatesValidNames[key];
+    const choosedItem: IChoosedItem = {
+      dropdownID,
+      listItemClass: this.listItemClass,
+      key,
+      currencyName
+    };
 
-    const listItemElement = new RenderElementNew({
+    const listItemElement = new RenderElement({
       tagName: 'li',
-      className: [this.listItemClass, `${this.listItemClass}--id_${dropdownID}`],
+      className: [
+        this.listItemClass,
+        `${this.listItemClass}--id_${dropdownID}`
+      ],
       dataset: {
-        'key': String(key),
-        'translate-value': `${index * 100}%`
+        key: String(key),
+        'translate-value': `${key * 100}%`
       },
       inner: `<strong>${text}&nbsp;</strong>- ${shortString(currencyName).slice(5, currencyName.length)}`,
       attributes: {
         title: currencyName
       },
       actions: {
-        click: this.handleChooseItem(dropdownID, this.listItemClass, key, currencyName)
+        click: this.handleChooseItem(choosedItem)
       }
     });
 
     return listItemElement.render();
   }
 
-  handleChooseItem(dropdownID: number, listItemClass: string, key: number, currencyName: string) {
+  handleChooseItem({ dropdownID, listItemClass, key, currencyName }: IChoosedItem) {
     const mainClass = listItemClass.slice(0, this.listItemClass.indexOf('_'));
     const dropdownTitle = new DropdownTitle(mainClass);
     const dropdownList = new DropdownList(mainClass);

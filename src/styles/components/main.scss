@@ -11,13 +11,21 @@
 }
 
 .app {
-  display: flex;
-  max-width: 500px;
-  padding: 0 10px 0 10px;
-  border-radius: var(--border-radius);
-  box-shadow: var(--box-shadow);
+  padding: 10px;
 }
 
 .container {
-  margin: 5px 10px 5px 10px;
+  display: flex;
+  max-width: 500px;
+  padding: 5px;
+  border-radius: var(--border-radius);
+  box-shadow: var(--box-shadow);
+
+  &__convert-from {
+    margin: 10px;
+  }
+
+  &__convert-to {
+    margin: 10px;
+  }
 }

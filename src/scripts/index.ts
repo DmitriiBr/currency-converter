@@ -1,30 +1,41 @@
 import '../styles/index.scss';
+import { ConvertionsTitle } from './components/ConvertionsTitle/ConvertionsTitle';
 import { MainCurrencyInput } from './components/CurrencyInput';
 import { Dropdown } from './components/Dropdown/Dropdown';
-import { RenderElementNew } from './Main/RenderElement';
+import { RenderElement } from './Main/RenderElement';
 
 class App {
   private appClass = 'app';
   private dropdown = new Dropdown('dropdown');
   private currencyInput = new MainCurrencyInput('input');
+  private convertionsTitlte = new ConvertionsTitle();
 
   public render() {
-    const convertFrom = new RenderElementNew({
+    const convertFrom = new RenderElement({
       tagName: 'div',
-      className: ['container', 'container__convert-from'],
+      className: ['container__convert-from'],
       inner: [this.dropdown.render(), this.currencyInput.render()]
     });
 
-    const convertTo = new RenderElementNew({
+    const convertTo = new RenderElement({
       tagName: 'div',
-      className: ['container', 'container__convert-to'],
+      className: ['container__convert-to'],
       inner: [this.dropdown.render(), this.currencyInput.render()]
     });
 
-    const element = new RenderElementNew({
+    const container = new RenderElement({
+      tagName: 'div',
+      className: ['container'],
+      inner: [convertFrom.render(), convertTo.render()]
+    });
+
+    const element = new RenderElement({
       tagName: 'div',
       className: [this.appClass],
-      inner: [convertFrom.render(), convertTo.render()]
+      inner: [
+        this.convertionsTitlte.render(),
+        container.render()
+      ]
     });
 
     return element.render();

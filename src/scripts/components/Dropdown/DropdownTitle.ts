@@ -1,4 +1,4 @@
-import { RenderElementNew } from '../../Main/RenderElement';
+import { RenderElement } from '../../Main/RenderElement';
 import { dropdownID } from './Dropdown';
 
 export class DropdownTitle {
@@ -13,7 +13,7 @@ export class DropdownTitle {
   }
 
   render(): Node {
-    const element = new RenderElementNew({
+    const element = new RenderElement({
       tagName: 'span',
       className: [this.titleClass, `${this.titleClass}--id_${dropdownID}`],
       inner: 'Choose currency',

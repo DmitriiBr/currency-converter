@@ -1,4 +1,4 @@
-import { ICurrencyRates } from './types';
+import { ICurrencyRates } from '../types/types';
 
 export const currencyRatesValidNames = [
   'United Arab Emirates Dirham',

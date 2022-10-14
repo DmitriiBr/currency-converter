@@ -1,28 +1,6 @@
-interface IDataset {
-  [key: string | number]: string;
-}
+import { Inner, IElement, IActions, IDataset, IAttributes } from '../types/types';
 
-interface IActions {
-  [key: string]: (e?: Event, element?: Element) => void;
-}
-
-interface IAttributes {
-  [key: string | number]: string;
-}
-
-type Inner = Node[] | string;
-
-export interface IElement {
-  tagName: string
-  className: string[]
-  inner?: Inner
-  type?: string
-  dataset?: IDataset
-  attributes?: IAttributes
-  actions?: IActions
-}
-
-export class RenderElementNew {
+export class RenderElement {
   private tagName: string;
   private className: string[];
   private inner: Inner | undefined;
@@ -65,8 +43,6 @@ export class RenderElementNew {
     }
   }
 
-  // Adding eventlistener by adding handle function to element
-  // Itereting through actions array and every action
   private addActions(element: Element, actions: IActions | undefined) {
     if (actions) {
       Object.keys(actions).forEach(action => {

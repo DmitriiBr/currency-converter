@@ -1,6 +1,7 @@
-import { getAllElements } from '../../Main/GetElement';
-import { RenderElementNew } from '../../Main/RenderElement';
+import { getAllElements } from '../../utils';
+import { RenderElement } from '../../Main/RenderElement';
 import { Store } from '../../store';
+import { ConvertionsTitle } from '../ConvertionsTitle/ConvertionsTitle';
 
 let inputID = -1;
 
@@ -20,7 +21,7 @@ export class MainCurrencyInput {
   render(): Node {
     inputID++;
 
-    const input = new RenderElementNew({
+    const input = new RenderElement({
       tagName: 'input',
       type: 'number',
       className: [
@@ -36,7 +37,7 @@ export class MainCurrencyInput {
       }
     });
 
-    const inputWrapper = new RenderElementNew({
+    const inputWrapper = new RenderElement({
       tagName: 'div',
       className: [`${this.mainClass}__wrapper`],
       inner: [input.render()]
@@ -46,6 +47,8 @@ export class MainCurrencyInput {
   }
 
   handleConvert(inputID: number) {
+    const convertionsTitlte = new ConvertionsTitle();
+
     return (e?: Event, element?: Element): void => {
       if (element instanceof HTMLInputElement) {
         Store.choosedItemValues[inputID] = Number(element.value);
@@ -74,6 +77,7 @@ export class MainCurrencyInput {
             }
           }
         });
+        convertionsTitlte.updateTitle();
       }
     };
   }
