@@ -26,7 +26,8 @@ export class ConvertionsTitle {
   }
 
   updateTitle() {
-    const convertedToValue = Store.choosedItemRates[1] / Store.choosedItemRates[0];
+    const convertedToValue =
+      Store.choosedItemRates[1] / Store.choosedItemRates[0];
     const titleSpansValue = getAllElements(this.titleSpanValue);
     const titleSpansCurrencyNames = getAllElements(this.titleSpanCurrencyName);
 
@@ -37,7 +38,7 @@ export class ConvertionsTitle {
 
       if (nameFrom && nameTo && title) {
         title.classList.remove(`${this.mainClass}--show`);
-        new Promise(res => {
+        new Promise((res) => {
           setTimeout(() => {
             title.classList.add(`${this.mainClass}--show`);
             res(1);
