@@ -1,4 +1,8 @@
-import { IDropdownListItem, IChoosedItem, IChangableElementByClass } from '../../types/types';
+import {
+  IDropdownListItem,
+  IChoosedItem,
+  IChangableElementByClass,
+} from '../../types/types';
 import { DropdownList } from './DropdownList';
 import { DropdownTitle } from './DropdownTitle';
 import { dropdownID } from './Dropdown';
@@ -23,32 +27,40 @@ export class DropdownListItem {
       dropdownID,
       listItemClass: this.listItemClass,
       key,
-      currencyName
+      currencyName,
     };
 
     const listItemElement = new RenderElement({
       tagName: 'li',
       className: [
         this.listItemClass,
-        `${this.listItemClass}--id_${dropdownID}`
+        `${this.listItemClass}--id_${dropdownID}`,
       ],
       dataset: {
         key: String(key),
-        'translate-value': `${key * 100}%`
+        'translate-value': `${key * 100}%`,
       },
-      inner: `<strong>${text}&nbsp;</strong>- ${shortString(currencyName).slice(5, currencyName.length)}`,
+      inner: `<strong>${text}&nbsp;</strong>- ${shortString(currencyName).slice(
+        5,
+        currencyName.length
+      )}`,
       attributes: {
-        title: currencyName
+        title: currencyName,
       },
       actions: {
-        click: this.handleChooseItem(choosedItem)
-      }
+        click: this.handleChooseItem(choosedItem),
+      },
     });
 
     return listItemElement.render();
   }
 
-  handleChooseItem({ dropdownID, listItemClass, key, currencyName }: IChoosedItem) {
+  handleChooseItem({
+    dropdownID,
+    listItemClass,
+    key,
+    currencyName,
+  }: IChoosedItem) {
     const mainClass = listItemClass.slice(0, this.listItemClass.indexOf('_'));
     const dropdownTitle = new DropdownTitle(mainClass);
     const dropdownList = new DropdownList(mainClass);
@@ -67,7 +79,8 @@ export class DropdownListItem {
       classRemove({ ...currentItem, all: true });
       classAdd(currentItem);
 
-      getAllElements(dropdownTitle.getClass())[dropdownID].textContent = currencyName;
+      getAllElements(dropdownTitle.getClass())[dropdownID].textContent =
+        currencyName;
       dropdownList.toggleList(dropdownID);
 
       Store.choosedItemID[dropdownID] = key;

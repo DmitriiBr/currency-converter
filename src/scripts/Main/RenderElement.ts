@@ -1,19 +1,31 @@
-import { Inner, IElement, IActions, IDataset, IAttributes } from '../types/types';
+import {
+  Inner,
+  IElement,
+  IActions,
+  IDataset,
+  IAttributes,
+} from '../types/types';
 
 export class RenderElement {
   private tagName: string;
-  private className: string[];
+  private className: string[] | string;
   private inner: Inner | undefined;
   private dataset: IDataset | undefined;
-  private type: string | undefined;
   private attributes: IAttributes | undefined;
   private actions: IActions | undefined;
 
-  constructor({ tagName, className, inner, type, dataset, attributes, actions }: IElement) {
+  constructor({
+    tagName,
+    className,
+    inner,
+    type,
+    dataset,
+    attributes,
+    actions,
+  }: IElement) {
     this.tagName = tagName;
     this.className = className;
     this.inner = inner;
-    this.type = type;
     this.dataset = dataset;
     this.attributes = attributes;
     this.actions = actions;
@@ -22,8 +34,11 @@ export class RenderElement {
   public render(): Node {
     const element = document.createElement(this.tagName);
 
-    element.classList.add(...this.className);
-    element.setAttribute('type', this.type || '');
+    if (typeof this.className === 'string') {
+      element.classList.add(this.className);
+    } else {
+      element.classList.add(...this.className);
+    }
 
     this.addDataAttributes(element, this.dataset);
     this.addAttributes(element, this.attributes);
@@ -45,7 +60,7 @@ export class RenderElement {
 
   private addActions(element: Element, actions: IActions | undefined) {
     if (actions) {
-      Object.keys(actions).forEach(action => {
+      Object.keys(actions).forEach((action) => {
         element.addEventListener(action, (e?: Event) => {
           actions[action](e, element);
         });

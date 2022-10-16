@@ -18,7 +18,7 @@ export class DropdownList {
     const listItems: Node[] = listData.map((elem, key) => {
       const item: IDropdownListItem = {
         text: elem[0],
-        key
+        key,
       };
 
       return this.listItem.render(item);
@@ -32,10 +32,10 @@ export class DropdownList {
 
     const wrapper = new RenderElement({
       tagName: 'div',
-      className: [`${this.listClass}--wrapper`],
+      className: `${this.listClass}--wrapper`,
       inner: [list.render()],
       actions: {
-        mouseover: this.handleMouseOver()
+        mouseover: this.handleMouseOver(),
       },
     });
 
@@ -44,7 +44,9 @@ export class DropdownList {
 
   toggleList(i = 0) {
     const allListWrapperElements = getAllElements(`${this.listClass}--wrapper`);
-    allListWrapperElements[i].classList.toggle(`${this.listClass}--wrapper--show`);
+    allListWrapperElements[i].classList.toggle(
+      `${this.listClass}--wrapper--show`
+    );
   }
 
   handleMouseOver() {
@@ -55,7 +57,9 @@ export class DropdownList {
           const translateValue = target.dataset.translateValue;
 
           if (element instanceof HTMLElement) {
-            translateValue ? element.style.setProperty('--translate-value', translateValue) : null;
+            translateValue
+              ? element.style.setProperty('--translate-value', translateValue)
+              : null;
           }
         }
       }
