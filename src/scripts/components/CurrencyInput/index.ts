@@ -4,7 +4,7 @@ import { Store } from '../../store';
 
 let inputID = -1;
 
-export class MainCurrencyInput {
+export class Input {
   private mainClass: string | undefined;
   private inputFieldClass: string;
 
@@ -13,11 +13,11 @@ export class MainCurrencyInput {
     this.inputFieldClass = `${mainClass}__field`;
   }
 
-  getClass() {
+  public getClass() {
     return this.inputFieldClass;
   }
 
-  render(): Node {
+  public render(): Node {
     inputID++;
 
     const input = new RenderElement({
@@ -25,28 +25,26 @@ export class MainCurrencyInput {
       type: 'number',
       className: [
         this.inputFieldClass,
-        `${this.inputFieldClass}--currency`,
-        `${this.inputFieldClass}--id_${inputID}`
+        `${this.inputFieldClass}--id_${inputID}`,
       ],
       dataset: {
-        'input-id': String(inputID)
+        'input-id': String(inputID),
       },
       actions: {
-        input: this.handleConvert(inputID)
-      }
+        input: this.handleConvert(inputID),
+      },
     });
 
     const inputWrapper = new RenderElement({
       tagName: 'div',
       className: [`${this.mainClass}__wrapper`],
-      inner: [input.render()]
+      inner: [input.render()],
     });
 
     return inputWrapper.render();
   }
 
   handleConvert(inputID: number) {
-
     return (e?: Event, element?: Element): void => {
       if (element instanceof HTMLInputElement) {
         Store.choosedItemValues[inputID] = Number(element.value);
@@ -65,8 +63,10 @@ export class MainCurrencyInput {
               const finalRate = Store.choosedItemRates[i] / rate;
 
               if (finalRate && finalRate !== Infinity) {
-                storeValue = finalRate * value;
-                exactInput.value = storeValue.toFixed(2);
+                storeValue = Math.floor(finalRate * value);
+
+                exactInput.value =
+                  storeValue === 0 ? '' : storeValue.toFixed(2);
               }
             }
           }

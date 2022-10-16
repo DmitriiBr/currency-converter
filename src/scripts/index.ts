@@ -1,6 +1,6 @@
 import '../styles/index.scss';
 import { ConvertionsTitle } from './components/ConvertionsTitle/ConvertionsTitle';
-import { MainCurrencyInput } from './components/CurrencyInput';
+import { Input } from './components/CurrencyInput';
 import { Dropdown } from './components/Dropdown/Dropdown';
 import { Navbar } from './components/Navbar/Navbar';
 import { RenderElement } from './Main/RenderElement';
@@ -8,7 +8,7 @@ import { RenderElement } from './Main/RenderElement';
 class App {
   private appClass = 'app';
   private dropdown = new Dropdown('dropdown');
-  private currencyInput = new MainCurrencyInput('input');
+  private currencyInput = new Input('currency-input');
   private convertionsTitlte = new ConvertionsTitle();
   private navbar = new Navbar();
 

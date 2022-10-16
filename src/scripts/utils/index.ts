@@ -1,16 +1,32 @@
-import { currencyRates } from '../data';
+import { fetchedData } from '../data';
+import { commonCurrencies } from '../data/commonCurrencies';
+import { ICurrencyRates } from '../types/types';
 
 export const elementGuard = (elem: HTMLElement | null): boolean => {
   return elem === null ? false : true;
 };
 
-export const currencyRatesToArray = () => {
-  return Object.entries(currencyRates.rates);
+const currencyRatesToArray = (data: ICurrencyRates) => {
+  const filteredRates = Object.entries(data.rates)
+    .filter((elem) => commonCurrencies[elem[0]])
+    .map((elem) => {
+      const parsedElem = {
+        code: elem[0],
+        nams: commonCurrencies[elem[0]],
+        rate: elem[1],
+      };
+
+      return parsedElem;
+    });
+
+  return filteredRates;
 };
 
+export const parsedCurrencyRates = currencyRatesToArray(fetchedData);
+
 export const shortString = (str: string): string => {
-  if (str.length > 21) {
-    return str.slice(0, 21) + '...';
+  if (str.length > 17) {
+    return str.slice(0, 17) + '...';
   } else {
     return str;
   }

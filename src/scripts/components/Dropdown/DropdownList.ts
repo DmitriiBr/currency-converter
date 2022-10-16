@@ -1,6 +1,6 @@
 import { DropdownListItem } from './DropdownListItem';
 import { dropdownID } from './Dropdown';
-import { currencyRatesToArray, getAllElements } from '../../utils';
+import { getAllElements, parsedCurrencyRates } from '../../utils';
 import { RenderElement } from '../../Main/RenderElement';
 import { IDropdownListItem } from '../../types/types';
 
@@ -14,10 +14,11 @@ export class DropdownList {
   }
 
   render(): Node {
-    const listData = currencyRatesToArray();
+    const listData = parsedCurrencyRates;
     const listItems: Node[] = listData.map((elem, key) => {
       const item: IDropdownListItem = {
-        text: elem[0],
+        currencyCode: elem.code,
+        currencyName: elem.nams,
         key,
       };
 

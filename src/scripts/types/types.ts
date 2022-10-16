@@ -1,13 +1,15 @@
 // For creating list with its items
 export interface IDropdownListItem {
-  text: string;
+  currencyCode: string;
+  currencyName: string;
   key: number;
 }
 
 // For fetching in a future
 export interface ICurrencyRates {
-  base: 'USD';
+  table: string;
   rates: IRates;
+  lastupdate: string;
 }
 interface IRates {
   [key: string]: number;
@@ -26,7 +28,7 @@ export interface IChoosedItem {
   dropdownID: number;
   listItemClass: string;
   key: number;
-  currencyName: string;
+  fullCurrencyName: string;
 }
 
 // RenderElement

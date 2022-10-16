@@ -6,12 +6,11 @@ import {
 import { DropdownList } from './DropdownList';
 import { DropdownTitle } from './DropdownTitle';
 import { dropdownID } from './Dropdown';
-import { currencyRatesToArray, shortString, getAllElements } from '../../utils';
+import { getAllElements, parsedCurrencyRates, shortString } from '../../utils';
 import { classAdd, classRemove } from '../../Main/ChangeElementClass';
 import { RenderElement } from '../../Main/RenderElement';
-import { currencyRatesValidNames } from '../../data';
 import { Store } from '../../store';
-import { MainCurrencyInput } from '../CurrencyInput';
+import { Input } from '../CurrencyInput';
 import { ConvertionsTitle } from '../ConvertionsTitle/ConvertionsTitle';
 
 export class DropdownListItem {
@@ -21,13 +20,13 @@ export class DropdownListItem {
     this.listItemClass = `${listClass}--item`;
   }
 
-  render({ text, key }: IDropdownListItem): Node {
-    const currencyName = text + ' - ' + currencyRatesValidNames[key];
+  render({ currencyCode, currencyName, key }: IDropdownListItem): Node {
+    const fullCurrencyName = currencyCode + ' - ' + currencyName;
     const choosedItem: IChoosedItem = {
       dropdownID,
       listItemClass: this.listItemClass,
       key,
-      currencyName,
+      fullCurrencyName,
     };
 
     const listItemElement = new RenderElement({
@@ -40,9 +39,8 @@ export class DropdownListItem {
         key: String(key),
         'translate-value': `${key * 100}%`,
       },
-      inner: `<strong>${text}&nbsp;</strong>- ${shortString(currencyName).slice(
-        5,
-        currencyName.length
+      inner: `<strong>${currencyCode}&nbsp;</strong>- ${shortString(
+        currencyName
       )}`,
       attributes: {
         title: currencyName,
@@ -59,13 +57,13 @@ export class DropdownListItem {
     dropdownID,
     listItemClass,
     key,
-    currencyName,
+    fullCurrencyName,
   }: IChoosedItem) {
     const mainClass = listItemClass.slice(0, this.listItemClass.indexOf('_'));
     const dropdownTitle = new DropdownTitle(mainClass);
     const dropdownList = new DropdownList(mainClass);
     const highlight = `${this.listItemClass}--highlight`;
-    const currencyInput = new MainCurrencyInput('input');
+    const currencyInput = new Input('currency-input');
     const convertionsTitlte = new ConvertionsTitle();
 
     return (e?: Event) => {
@@ -80,12 +78,12 @@ export class DropdownListItem {
       classAdd(currentItem);
 
       getAllElements(dropdownTitle.getClass())[dropdownID].textContent =
-        currencyName;
+        fullCurrencyName;
       dropdownList.toggleList(dropdownID);
 
       Store.choosedItemID[dropdownID] = key;
-      Store.choosedItemRates[dropdownID] = currencyRatesToArray()[key][1];
-      Store.currencyNames[dropdownID] = currencyName;
+      Store.choosedItemRates[dropdownID] = parsedCurrencyRates[key].rate;
+      Store.currencyNames[dropdownID] = fullCurrencyName;
 
       allInputElements.forEach((elem, index) => {
         if (elem instanceof HTMLInputElement && index !== dropdownID) {
