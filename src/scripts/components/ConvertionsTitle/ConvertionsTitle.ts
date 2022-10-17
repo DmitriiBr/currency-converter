@@ -1,9 +1,9 @@
 import { RenderElement } from '../../Main/RenderElement';
 import { Store } from '../../store';
-import { getAllElements, getElement } from '../../utils';
+import { fixValue, getAllElements, getElement } from '../../utils';
 
 export class ConvertionsTitle {
-  private mainClass = 'title';
+  private mainClass = 'convertions-title';
   private titleSpanCurrencyName = `${this.mainClass}__span--currency`;
   private titleSpanValue = `${this.mainClass}__span--value`;
 
@@ -38,6 +38,7 @@ export class ConvertionsTitle {
 
       if (nameFrom && nameTo && title) {
         title.classList.remove(`${this.mainClass}--show`);
+
         new Promise((res) => {
           setTimeout(() => {
             title.classList.add(`${this.mainClass}--show`);
@@ -46,7 +47,7 @@ export class ConvertionsTitle {
         }).then(() => {
           titleSpansValue[0].textContent = '1';
           titleSpansCurrencyNames[0].textContent = `${nameFrom}`;
-          titleSpansValue[1].textContent = convertedToValue.toFixed(2);
+          titleSpansValue[1].textContent = fixValue(convertedToValue);
           titleSpansCurrencyNames[1].textContent = `${nameTo}`;
         });
       }

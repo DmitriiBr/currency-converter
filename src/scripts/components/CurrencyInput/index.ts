@@ -1,4 +1,4 @@
-import { getAllElements } from '../../utils';
+import { getAllElements, fixValue } from '../../utils';
 import { RenderElement } from '../../Main/RenderElement';
 import { Store } from '../../store';
 
@@ -22,7 +22,6 @@ export class Input {
 
     const input = new RenderElement({
       tagName: 'input',
-      type: 'number',
       className: [
         this.inputFieldClass,
         `${this.inputFieldClass}--id_${inputID}`,
@@ -32,6 +31,9 @@ export class Input {
       },
       actions: {
         input: this.handleConvert(inputID),
+      },
+      attributes: {
+        type: 'number',
       },
     });
 
@@ -63,10 +65,8 @@ export class Input {
               const finalRate = Store.choosedItemRates[i] / rate;
 
               if (finalRate && finalRate !== Infinity) {
-                storeValue = Math.floor(finalRate * value);
-
-                exactInput.value =
-                  storeValue === 0 ? '' : storeValue.toFixed(2);
+                storeValue = finalRate * value;
+                exactInput.value = storeValue === 0 ? '' : fixValue(storeValue);
               }
             }
           }

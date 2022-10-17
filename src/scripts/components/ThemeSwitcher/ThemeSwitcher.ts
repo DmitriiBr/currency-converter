@@ -32,9 +32,9 @@ export class ThemeSwitcher {
   handleSwitchTheme(e?: Event, element?: Element) {
     if (element instanceof HTMLInputElement) {
       if (element.checked) {
-        document.body.classList.add('dark-theme');
-      } else {
         document.body.classList.remove('dark-theme');
+      } else {
+        document.body.classList.add('dark-theme');
       }
     }
   }

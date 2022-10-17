@@ -25,8 +25,8 @@ const currencyRatesToArray = (data: ICurrencyRates) => {
 export const parsedCurrencyRates = currencyRatesToArray(fetchedData);
 
 export const shortString = (str: string): string => {
-  if (str.length > 17) {
-    return str.slice(0, 17) + '...';
+  if (str.length > 20) {
+    return str.slice(0, 20) + '...';
   } else {
     return str;
   }
@@ -40,4 +40,12 @@ export const getElement = (selector: string) => {
 export const getAllElements = (selector: string) => {
   const elements = document.querySelectorAll(`.${selector}`);
   return elements;
+};
+
+export const fixValue = (value: number) => {
+  for (let i = 2; i <= 6; i++) {
+    if (value.toFixed(i)[i] !== '0') return value.toFixed(i);
+  }
+
+  return value.toFixed(7);
 };
