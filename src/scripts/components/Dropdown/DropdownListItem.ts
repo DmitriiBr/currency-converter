@@ -12,12 +12,17 @@ import { RenderElement } from '../../Main/RenderElement';
 import { Store } from '../../store';
 import { Input } from '../CurrencyInput';
 import { ConvertionsTitle } from '../ConvertionsTitle/ConvertionsTitle';
+import { SearchInput } from '../SearchInput/SearchInput';
 
 export class DropdownListItem {
   private listItemClass: string;
 
   constructor(listClass: string) {
     this.listItemClass = `${listClass}--item`;
+  }
+
+  getClass() {
+    return this.listItemClass;
   }
 
   render({ currencyCode, currencyName, key }: IDropdownListItem): Node {
@@ -28,6 +33,7 @@ export class DropdownListItem {
       key,
       fullCurrencyName,
     };
+    const translateValue = key + 1;
 
     const listItemElement = new RenderElement({
       tagName: 'li',
@@ -37,7 +43,7 @@ export class DropdownListItem {
       ],
       dataset: {
         key: String(key),
-        'translate-value': `${key * 100}%`,
+        'translate-value': `${translateValue * 100}%`,
       },
       inner: `<strong>${currencyCode}&nbsp;</strong>- ${shortString(
         currencyName
@@ -65,6 +71,7 @@ export class DropdownListItem {
     const highlight = `${this.listItemClass}--highlight`;
     const currencyInput = new Input('currency-input');
     const convertionsTitlte = new ConvertionsTitle();
+    const searchInput = new SearchInput('input');
 
     return (e?: Event) => {
       const currentItem: IChangableElementByClass = {
@@ -91,6 +98,7 @@ export class DropdownListItem {
         }
       });
       convertionsTitlte.updateTitle();
+      searchInput.resetValue(`${this.listItemClass}--id_${dropdownID}`);
     };
   }
 }

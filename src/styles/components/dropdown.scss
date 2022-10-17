@@ -76,6 +76,7 @@
       border: var(--border-primary);
       backdrop-filter: blur(5px);
       transition: all var(--transition-time) ease-in-out;
+      --translate-value: 100%;
 
       &--show {
         transform: scale(1);
@@ -86,7 +87,7 @@
     &::before {
       content: '';
       position: absolute;
-      top: 0;
+      top: 10px;
       bottom: 0;
       right: 2%;
       left: 0;
@@ -120,5 +121,12 @@
         color: rgba(0, 150, 255, 1);
       }
     }
+  }
+  .search-list-item {
+    margin-bottom: 10px;
+  }
+
+  .hide {
+    display: none;
   }
 }

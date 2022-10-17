@@ -5,10 +5,10 @@ import { Store } from '../../store';
 let inputID = -1;
 
 export class Input {
-  private mainClass: string | undefined;
+  private mainClass: string;
   private inputFieldClass: string;
 
-  constructor(mainClass?: string) {
+  constructor(mainClass: string) {
     this.mainClass = mainClass;
     this.inputFieldClass = `${mainClass}__field`;
   }
@@ -23,8 +23,9 @@ export class Input {
     const input = new RenderElement({
       tagName: 'input',
       className: [
+        this.mainClass,
         this.inputFieldClass,
-        `${this.inputFieldClass}--id_${inputID}`,
+        `${this.inputFieldClass}--currency`,
       ],
       dataset: {
         'input-id': String(inputID),
@@ -51,7 +52,9 @@ export class Input {
       if (element instanceof HTMLInputElement) {
         Store.choosedItemValues[inputID] = Number(element.value);
 
-        const allInputElements = getAllElements(this.inputFieldClass);
+        const allInputElements = getAllElements(
+          `${this.inputFieldClass}--currency`
+        );
         const value = Store.choosedItemValues[inputID];
         const rate = Store.choosedItemRates[inputID];
 

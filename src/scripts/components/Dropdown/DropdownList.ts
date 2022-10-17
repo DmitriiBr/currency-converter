@@ -2,7 +2,8 @@ import { DropdownListItem } from './DropdownListItem';
 import { dropdownID } from './Dropdown';
 import { getAllElements, parsedCurrencyRates } from '../../utils';
 import { RenderElement } from '../../Main/RenderElement';
-import { IDropdownListItem } from '../../types/types';
+import { IDropdownListItem, IListItemObject } from '../../types/types';
+import { SearchInput } from '../SearchInput/SearchInput';
 
 export class DropdownList {
   private listClass: string;
@@ -15,20 +16,32 @@ export class DropdownList {
 
   render(): Node {
     const listData = parsedCurrencyRates;
-    const listItems: Node[] = listData.map((elem, key) => {
+    const listItems: IListItemObject[] = listData.map(({ code, name }, i) => {
       const item: IDropdownListItem = {
-        currencyCode: elem.code,
-        currencyName: elem.nams,
-        key,
+        currencyCode: code,
+        currencyName: name,
+        key: i,
       };
 
-      return this.listItem.render(item);
+      const listItemObject: IListItemObject = {
+        code,
+        name,
+        element: this.listItem.render(item),
+      };
+
+      return listItemObject;
+    });
+
+    const searchItem = new RenderElement({
+      tagName: 'li',
+      className: [this.listItem.getClass(), 'search-list-item'],
+      inner: [new SearchInput('input').render(dropdownID, listItems)],
     });
 
     const list = new RenderElement({
       tagName: 'ul',
       className: [this.listClass, `${this.listClass}--id_${dropdownID}`],
-      inner: listItems,
+      inner: [searchItem.render(), ...listItems.map(({ element }) => element)],
     });
 
     const wrapper = new RenderElement({
@@ -36,7 +49,7 @@ export class DropdownList {
       className: `${this.listClass}--wrapper`,
       inner: [list.render()],
       actions: {
-        mouseover: this.handleMouseOver(),
+        mouseover: this.handleMouseOver,
       },
     });
 
@@ -45,25 +58,27 @@ export class DropdownList {
 
   toggleList(i = 0) {
     const allListWrapperElements = getAllElements(`${this.listClass}--wrapper`);
-    allListWrapperElements[i].classList.toggle(
-      `${this.listClass}--wrapper--show`
-    );
+    allListWrapperElements.forEach((elem, index) => {
+      if (index === i) {
+        elem.classList.toggle(`${this.listClass}--wrapper--show`);
+      } else {
+        elem.classList.remove(`${this.listClass}--wrapper--show`);
+      }
+    });
   }
 
-  handleMouseOver() {
-    return (e?: Event, element?: Element) => {
-      if (e) {
-        const { target } = e;
-        if (target instanceof HTMLElement) {
-          const translateValue = target.dataset.translateValue;
+  handleMouseOver(e?: Event, element?: Element) {
+    if (e) {
+      const { target } = e;
+      if (target instanceof HTMLElement) {
+        const translateValue = target.dataset.translateValue;
 
-          if (element instanceof HTMLElement) {
-            translateValue
-              ? element.style.setProperty('--translate-value', translateValue)
-              : null;
-          }
+        if (element instanceof HTMLElement) {
+          translateValue
+            ? element.style.setProperty('--translate-value', translateValue)
+            : null;
         }
       }
-    };
+    }
   }
 }

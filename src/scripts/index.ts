@@ -13,7 +13,7 @@ import { RenderElement } from './Main/RenderElement';
 class App {
   private appClass = 'app';
   private dropdown = new Dropdown('dropdown');
-  private currencyInput = new Input('currency-input');
+  private currencyInput = new Input('input');
   private convertionsTitlte = new ConvertionsTitle();
   private navbar = new Navbar();
 

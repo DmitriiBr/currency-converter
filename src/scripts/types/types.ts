@@ -4,6 +4,11 @@ export interface IDropdownListItem {
   currencyName: string;
   key: number;
 }
+export interface IListItemObject {
+  code: string;
+  name: string;
+  element: Node;
+}
 
 // For fetching in a future
 export interface ICurrencyRates {

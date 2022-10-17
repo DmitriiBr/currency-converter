@@ -12,7 +12,7 @@ const currencyRatesToArray = (data: ICurrencyRates) => {
     .map((elem) => {
       const parsedElem = {
         code: elem[0],
-        nams: commonCurrencies[elem[0]],
+        name: commonCurrencies[elem[0]],
         rate: elem[1],
       };
 
@@ -43,6 +43,8 @@ export const getAllElements = (selector: string) => {
 };
 
 export const fixValue = (value: number) => {
+  if (value.toFixed(2) === '1.00') return '1';
+
   for (let i = 2; i <= 6; i++) {
     if (value.toFixed(i)[i] !== '0') return value.toFixed(i);
   }
