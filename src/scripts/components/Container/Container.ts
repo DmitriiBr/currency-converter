@@ -14,13 +14,13 @@ export class Container {
   render(): HTMLElement {
     const convertFrom = new RenderElement({
       tagName: 'div',
-      className: ['container__convert-from'],
+      className: `${this.mainClass}__convert-from`,
       inner: [this.currencyInput.render(), this.dropdown.render()],
     });
 
     const convertTo = new RenderElement({
       tagName: 'div',
-      className: ['container__convert-to'],
+      className: `${this.mainClass}__convert-to`,
       inner: [this.currencyInput.render(), this.dropdown.render()],
     });
 
