@@ -1,17 +1,9 @@
-import { ICurrencyRates } from '../types/types';
+import {
+  ICurrencyRates,
+  IMappedRatesElement,
+  ICurrencyData,
+} from '../types/types';
 import { commonCurrencies } from '../data/commonCurrencies';
-
-interface IMappedRatesElement {
-  code: string;
-  name: string;
-  rate: number;
-}
-
-export interface ICurrencyData {
-  table: string;
-  rates: IMappedRatesElement[];
-  lastupdata: string;
-}
 
 export let currencyData: ICurrencyData = {
   table: '',
@@ -61,11 +53,13 @@ export const getRatesData = async () => {
     console.log('Not fethced data!!!');
 
     const currencyDataJSONParsed = JSON.parse(localData || '');
+    const lastUpdata = new Date(currencyDataJSONParsed.lastupdata);
+    const dateNow = new Date();
 
-    currencyData = currencyDataJSONParsed;
+    if (dateNow.getHours() - lastUpdata.getHours() >= 3) {
+      await fetchRates('https://cdn.cur.su/api/latest.json');
+    } else {
+      currencyData = currencyDataJSONParsed;
+    }
   }
 };
-
-// export const fetchedAndParsedCurrencyRates = currencyRatesToArrayFetched(
-//   fetchRates<ICurrencyRates>('https://cdn.cur.su/api/latest.json')
-// );

@@ -64,3 +64,15 @@ export interface IElement {
   attributes?: IAttributes;
   actions?: IActions;
 }
+
+export interface IMappedRatesElement {
+  code: string;
+  name: string;
+  rate: number;
+}
+
+export interface ICurrencyData {
+  table: string;
+  rates: IMappedRatesElement[];
+  lastupdata: string;
+}

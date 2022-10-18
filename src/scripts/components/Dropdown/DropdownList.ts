@@ -2,9 +2,13 @@ import { DropdownListItem } from './DropdownListItem';
 import { dropdownID } from './Dropdown';
 import { getAllElements } from '../../utils';
 import { RenderElement } from '../../Main/RenderElement';
-import { IDropdownListItem, IListItemObject } from '../../types/types';
+import {
+  IDropdownListItem,
+  IListItemObject,
+  ICurrencyData,
+} from '../../types/types';
 import { SearchInput } from '../SearchInput/SearchInput';
-import { currencyData, ICurrencyData } from '../../api/rates';
+import { currencyData } from '../../api/rates';
 
 export class DropdownList {
   private listClass: string;
