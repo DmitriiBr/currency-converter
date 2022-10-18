@@ -20,7 +20,7 @@ export class Dropdown {
     const element = new RenderElement({
       tagName: 'div',
       className: [this.mainClass, `${this.mainClass}--id_${dropdownID}`],
-      inner: [btn.render(), list.render()]
+      inner: [btn.render(), list.render()],
     });
 
     return element.render();

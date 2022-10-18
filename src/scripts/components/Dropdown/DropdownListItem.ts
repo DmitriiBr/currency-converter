@@ -9,8 +9,8 @@ import { dropdownID } from './Dropdown';
 import { getAllElements, parsedCurrencyRates, shortString } from '../../utils';
 import { classAdd, classRemove } from '../../Main/ChangeElementClass';
 import { RenderElement } from '../../Main/RenderElement';
-import { Store } from '../../store';
-import { Input } from '../CurrencyInput';
+import { dispatchStore } from '../../store';
+import { Input } from '../CurrencyInput/CurrencyInput';
 import { ConvertionsTitle } from '../ConvertionsTitle/ConvertionsTitle';
 import { SearchInput } from '../SearchInput/SearchInput';
 
@@ -69,7 +69,7 @@ export class DropdownListItem {
     const dropdownTitle = new DropdownTitle(mainClass);
     const dropdownList = new DropdownList(mainClass);
     const highlight = `${this.listItemClass}--highlight`;
-    const currencyInput = new Input('currency-input');
+    const currencyInput = new Input('input');
     const convertionsTitlte = new ConvertionsTitle();
     const searchInput = new SearchInput('input');
 
@@ -86,11 +86,16 @@ export class DropdownListItem {
 
       getAllElements(dropdownTitle.getClass())[dropdownID].textContent =
         fullCurrencyName;
+
       dropdownList.toggleList(dropdownID);
 
-      Store.choosedItemID[dropdownID] = key;
-      Store.choosedItemRates[dropdownID] = parsedCurrencyRates[key].rate;
-      Store.currencyNames[dropdownID] = fullCurrencyName;
+      dispatchStore('choosedItemID', dropdownID, key);
+      dispatchStore(
+        'choosedItemRates',
+        dropdownID,
+        parsedCurrencyRates[key].rate
+      );
+      dispatchStore('currencyNames', dropdownID, fullCurrencyName);
 
       allInputElements.forEach((elem, index) => {
         if (index !== dropdownID) {

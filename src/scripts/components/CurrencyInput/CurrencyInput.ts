@@ -1,20 +1,22 @@
 import { getAllElements, fixValue } from '../../utils';
 import { RenderElement } from '../../Main/RenderElement';
-import { Store } from '../../store';
+import { dispatchStore, getValueFromStore } from '../../store';
 
 let inputID = -1;
 
 export class Input {
   private mainClass: string;
   private inputFieldClass: string;
+  private currencyInputClass: string;
 
   constructor(mainClass: string) {
     this.mainClass = mainClass;
     this.inputFieldClass = `${mainClass}__field`;
+    this.currencyInputClass = `${this.inputFieldClass}--currency`;
   }
 
   public getClass() {
-    return this.inputFieldClass;
+    return this.currencyInputClass;
   }
 
   public render(): Node {
@@ -25,7 +27,7 @@ export class Input {
       className: [
         this.mainClass,
         this.inputFieldClass,
-        `${this.inputFieldClass}--currency`,
+        this.currencyInputClass,
       ],
       dataset: {
         'input-id': String(inputID),
@@ -49,27 +51,29 @@ export class Input {
 
   handleConvert(inputID: number) {
     return (e?: Event, element?: Element): void => {
-      Store.choosedItemValues[inputID] = Number(
-        (element as HTMLInputElement).value
-      );
+      const inputValue = Number((element as HTMLInputElement).value);
+      const allInputElements = getAllElements(this.currencyInputClass);
 
-      const allInputElements = getAllElements(
-        `${this.inputFieldClass}--currency`
-      );
-      const value = Store.choosedItemValues[inputID];
-      const rate = Store.choosedItemRates[inputID];
+      dispatchStore('choosedItemValues', inputID, inputValue);
 
-      Store.convertedValues.forEach((storeValue, i) => {
-        const exactInput = allInputElements[i];
+      const value = getValueFromStore('choosedItemValues', inputID);
+      const rate = getValueFromStore('choosedItemRates', inputID);
 
+      allInputElements.forEach((elem, i) => {
         if (i === inputID) {
-          storeValue = value;
+          dispatchStore('choosedItemValues', i, value);
         } else {
-          const finalRate = Store.choosedItemRates[i] / rate;
+          const finalRate =
+            Number(getValueFromStore('choosedItemRates', i)) / Number(rate);
 
           if (finalRate && finalRate !== Infinity) {
-            storeValue = finalRate * value;
-            (exactInput as HTMLInputElement).value =
+            dispatchStore('choosedItemValues', i, finalRate * Number(value));
+
+            const storeValue = Number(
+              getValueFromStore('choosedItemValues', i)
+            );
+
+            (elem as HTMLInputElement).value =
               storeValue === 0 ? '' : fixValue(storeValue);
           }
         }

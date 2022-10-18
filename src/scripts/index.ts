@@ -1,17 +1,10 @@
 import '../styles/index.scss';
+import { getRatesData } from './api/rates';
 import { ConvertionsTitle } from './components/ConvertionsTitle/ConvertionsTitle';
-import { Input } from './components/CurrencyInput';
+import { Input } from './components/CurrencyInput/CurrencyInput';
 import { Dropdown } from './components/Dropdown/Dropdown';
 import { Navbar } from './components/Navbar/Navbar';
 import { RenderElement } from './Main/RenderElement';
-
-// TODO:
-// Fix bug with translate values and overflow
-// Fetch data to finalaly complete tast
-// Connect fethed data to localstorage
-// Create local storage cahe to start at the same points
-// Idea is to prefill Store with local storage data
-// Mb some components refactoring
 
 class App {
   private appClass = 'app';
@@ -56,6 +49,21 @@ class App {
 const main = document.querySelector('.main');
 const app = new App();
 
-if (app) {
-  main?.append(app.render() || 'not appended mistake');
-}
+const mainFunc = async () => {
+  try {
+    // await fetchRates('https://cdn.cur.su/api/latest.json');
+    await getRatesData();
+
+    if (app) {
+      main?.append(app.render() || 'not appended mistake');
+    }
+  } catch (e) {
+    const result = (e as Error).message;
+
+    main?.append('Hello world');
+
+    throw new Error(result);
+  }
+};
+
+mainFunc();

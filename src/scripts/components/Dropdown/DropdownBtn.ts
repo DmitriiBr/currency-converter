@@ -21,8 +21,8 @@ export class DropdownBtn {
       className: [this.btnClass, `${this.btnClass}--id_${dropdownID}`],
       inner: [title],
       actions: {
-        click: this.handleToggle(dropdownID)
-      }
+        click: this.handleToggle(dropdownID),
+      },
     });
 
     return element.render();
@@ -30,7 +30,9 @@ export class DropdownBtn {
 
   handleToggle(index: number) {
     const dropdownList = new DropdownList(this.mainClass);
-    return (e?: Event) => dropdownList.toggleList(index);
+
+    return (e?: Event) => {
+      dropdownList.toggleList(index);
+    };
   }
 }
-

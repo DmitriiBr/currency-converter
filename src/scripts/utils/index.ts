@@ -1,12 +1,12 @@
 import { fetchedData } from '../data';
 import { commonCurrencies } from '../data/commonCurrencies';
-import { CustomNodeListOf, ICurrencyRates } from '../types/types';
+import { ICurrencyRates } from '../types/types';
 
 export const elementGuard = (elem: HTMLElement | null): boolean => {
   return elem === null ? false : true;
 };
 
-const currencyRatesToArray = (data: ICurrencyRates) => {
+export const currencyRatesToArray = (data: ICurrencyRates) => {
   const filteredRates = Object.entries(data.rates)
     .filter((elem) => commonCurrencies[elem[0]])
     .map((elem) => {
@@ -37,7 +37,7 @@ export const getElement = (selector: string) => {
   return element;
 };
 
-export const getAllElements = (selector: string): CustomNodeListOf => {
+export const getAllElements = (selector: string) => {
   const elements = document.querySelectorAll(`.${selector}`);
   return elements;
 };

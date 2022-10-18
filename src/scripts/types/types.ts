@@ -17,6 +17,7 @@ export interface ICurrencyRates {
   rates: IRates;
   lastupdate: string;
 }
+
 interface IRates {
   [key: string]: number;
 }

@@ -1,9 +1,10 @@
 import { DropdownListItem } from './DropdownListItem';
 import { dropdownID } from './Dropdown';
-import { getAllElements, parsedCurrencyRates } from '../../utils';
+import { getAllElements } from '../../utils';
 import { RenderElement } from '../../Main/RenderElement';
 import { IDropdownListItem, IListItemObject } from '../../types/types';
 import { SearchInput } from '../SearchInput/SearchInput';
+import { currencyData, ICurrencyData } from '../../api/rates';
 
 export class DropdownList {
   private listClass: string;
@@ -15,22 +16,24 @@ export class DropdownList {
   }
 
   render(): Node {
-    const listData = parsedCurrencyRates;
-    const listItems: IListItemObject[] = listData.map(({ code, name }, i) => {
-      const item: IDropdownListItem = {
-        currencyCode: code,
-        currencyName: name,
-        key: i,
-      };
+    const listData: ICurrencyData = currencyData;
+    const listItems: IListItemObject[] = listData.rates.map(
+      ({ code, name }, i) => {
+        const item: IDropdownListItem = {
+          currencyCode: code,
+          currencyName: name,
+          key: i,
+        };
 
-      const listItemObject: IListItemObject = {
-        code,
-        name,
-        element: this.listItem.render(item),
-      };
+        const listItemObject: IListItemObject = {
+          code,
+          name,
+          element: this.listItem.render(item),
+        };
 
-      return listItemObject;
-    });
+        return listItemObject;
+      }
+    );
 
     const searchItem = new RenderElement({
       tagName: 'li',
