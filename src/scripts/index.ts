@@ -1,44 +1,24 @@
 import '../styles/index.scss';
 import { getRatesData } from './api/rates';
+import { Container } from './components/Container/Container';
 import { ConvertionsTitle } from './components/ConvertionsTitle/ConvertionsTitle';
-import { Input } from './components/CurrencyInput/CurrencyInput';
-import { Dropdown } from './components/Dropdown/Dropdown';
 import { Navbar } from './components/Navbar/Navbar';
 import { RenderElement } from './Main/RenderElement';
 
 class App {
   private appClass = 'app';
-  private dropdown = new Dropdown('dropdown');
-  private currencyInput = new Input('input');
   private convertionsTitlte = new ConvertionsTitle();
   private navbar = new Navbar();
+  private container = new Container('container');
 
   public render() {
-    const convertFrom = new RenderElement({
-      tagName: 'div',
-      className: ['container__convert-from'],
-      inner: [this.currencyInput.render(), this.dropdown.render()],
-    });
-
-    const convertTo = new RenderElement({
-      tagName: 'div',
-      className: ['container__convert-to'],
-      inner: [this.currencyInput.render(), this.dropdown.render()],
-    });
-
-    const container = new RenderElement({
-      tagName: 'div',
-      className: ['container'],
-      inner: [convertFrom.render(), convertTo.render()],
-    });
-
     const element = new RenderElement({
       tagName: 'div',
       className: [this.appClass],
       inner: [
         this.navbar.render(),
         this.convertionsTitlte.render(),
-        container.render(),
+        this.container.render(),
       ],
     });
 
@@ -49,9 +29,8 @@ class App {
 const main = document.querySelector('.main');
 const app = new App();
 
-const mainFunc = async () => {
+const init = async () => {
   try {
-    // await fetchRates('https://cdn.cur.su/api/latest.json');
     await getRatesData();
 
     if (app) {
@@ -66,4 +45,4 @@ const mainFunc = async () => {
   }
 };
 
-mainFunc();
+init();

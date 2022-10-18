@@ -74,5 +74,5 @@ export interface IMappedRatesElement {
 export interface ICurrencyData {
   table: string;
   rates: IMappedRatesElement[];
-  lastupdata: string;
+  lastupdate: string;
 }

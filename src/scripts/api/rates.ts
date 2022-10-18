@@ -8,26 +8,26 @@ import { commonCurrencies } from '../data/commonCurrencies';
 export let currencyData: ICurrencyData = {
   table: '',
   rates: [],
-  lastupdata: '',
+  lastupdate: '',
 };
 
-export const currencyRatesToArrayFetched = (data: ICurrencyRates) => {
+export const createCurrencyData = (data: ICurrencyRates) => {
   const filteredRates: IMappedRatesElement[] = Object.entries(data.rates)
     .filter((elem) => commonCurrencies[elem[0]])
     .map((elem) => {
-      const parsedElem: IMappedRatesElement = {
+      const mappedElement: IMappedRatesElement = {
         code: elem[0],
         name: commonCurrencies[elem[0]],
         rate: elem[1],
       };
 
-      return parsedElem;
+      return mappedElement;
     });
 
   currencyData = {
     table: data.table,
     rates: filteredRates,
-    lastupdata: data.lastupdate,
+    lastupdate: data.lastupdate,
   };
 
   const currencyDataJSONStringified = JSON.stringify(currencyData);
@@ -39,7 +39,7 @@ export const fetchRates = async (url: string) => {
   const response = await fetch(url);
   const data: ICurrencyRates = await response.json();
 
-  return currencyRatesToArrayFetched(data);
+  return createCurrencyData(data);
 };
 
 export const getRatesData = async () => {
@@ -52,8 +52,8 @@ export const getRatesData = async () => {
   } else {
     console.log('Not fethced data!!!');
 
-    const currencyDataJSONParsed = JSON.parse(localData || '');
-    const lastUpdata = new Date(currencyDataJSONParsed.lastupdata);
+    const currencyDataJSONParsed: ICurrencyData = JSON.parse(localData || '');
+    const lastUpdata = new Date(currencyDataJSONParsed.lastupdate);
     const dateNow = new Date();
 
     if (dateNow.getHours() - lastUpdata.getHours() >= 3) {

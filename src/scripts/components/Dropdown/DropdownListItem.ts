@@ -6,13 +6,14 @@ import {
 import { DropdownList } from './DropdownList';
 import { DropdownTitle } from './DropdownTitle';
 import { dropdownID } from './Dropdown';
-import { getAllElements, parsedCurrencyRates, shortString } from '../../utils';
+import { getAllElements, shortString } from '../../utils';
 import { classAdd, classRemove } from '../../Main/ChangeElementClass';
 import { RenderElement } from '../../Main/RenderElement';
 import { dispatchStore } from '../../store';
 import { Input } from '../CurrencyInput/CurrencyInput';
 import { ConvertionsTitle } from '../ConvertionsTitle/ConvertionsTitle';
 import { SearchInput } from '../SearchInput/SearchInput';
+import { currencyData } from '../../api/rates';
 
 export class DropdownListItem {
   private listItemClass: string;
@@ -93,7 +94,7 @@ export class DropdownListItem {
       dispatchStore(
         'choosedItemRates',
         dropdownID,
-        parsedCurrencyRates[key].rate
+        currencyData.rates[key].rate
       );
       dispatchStore('currencyNames', dropdownID, fullCurrencyName);
 
