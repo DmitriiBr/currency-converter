@@ -4,10 +4,11 @@ export interface IDropdownListItem {
   currencyName: string;
   key: number;
 }
+
 export interface IListItemObject {
   code: string;
   name: string;
-  element: Node;
+  element: HTMLElement;
 }
 
 // For fetching in a future
@@ -35,6 +36,11 @@ export interface IChoosedItem {
   key: number;
   fullCurrencyName: string;
 }
+
+export type CustomNodeListOf =
+  | NodeListOf<Element>
+  | NodeListOf<HTMLInputElement>
+  | NodeListOf<HTMLElement>;
 
 // RenderElement
 export interface IDataset {

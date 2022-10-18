@@ -49,32 +49,31 @@ export class Input {
 
   handleConvert(inputID: number) {
     return (e?: Event, element?: Element): void => {
-      if (element instanceof HTMLInputElement) {
-        Store.choosedItemValues[inputID] = Number(element.value);
+      Store.choosedItemValues[inputID] = Number(
+        (element as HTMLInputElement).value
+      );
 
-        const allInputElements = getAllElements(
-          `${this.inputFieldClass}--currency`
-        );
-        const value = Store.choosedItemValues[inputID];
-        const rate = Store.choosedItemRates[inputID];
+      const allInputElements = getAllElements(
+        `${this.inputFieldClass}--currency`
+      );
+      const value = Store.choosedItemValues[inputID];
+      const rate = Store.choosedItemRates[inputID];
 
-        Store.convertedValues.forEach((storeValue, i) => {
-          const exactInput: HTMLInputElement | Element = allInputElements[i];
+      Store.convertedValues.forEach((storeValue, i) => {
+        const exactInput = allInputElements[i];
 
-          if (exactInput instanceof HTMLInputElement) {
-            if (i === inputID) {
-              storeValue = value;
-            } else {
-              const finalRate = Store.choosedItemRates[i] / rate;
+        if (i === inputID) {
+          storeValue = value;
+        } else {
+          const finalRate = Store.choosedItemRates[i] / rate;
 
-              if (finalRate && finalRate !== Infinity) {
-                storeValue = finalRate * value;
-                exactInput.value = storeValue === 0 ? '' : fixValue(storeValue);
-              }
-            }
+          if (finalRate && finalRate !== Infinity) {
+            storeValue = finalRate * value;
+            (exactInput as HTMLInputElement).value =
+              storeValue === 0 ? '' : fixValue(storeValue);
           }
-        });
-      }
+        }
+      });
     };
   }
 }

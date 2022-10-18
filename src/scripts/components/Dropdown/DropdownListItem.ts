@@ -25,7 +25,7 @@ export class DropdownListItem {
     return this.listItemClass;
   }
 
-  render({ currencyCode, currencyName, key }: IDropdownListItem): Node {
+  render({ currencyCode, currencyName, key }: IDropdownListItem): HTMLElement {
     const fullCurrencyName = currencyCode + ' - ' + currencyName;
     const choosedItem: IChoosedItem = {
       dropdownID,
@@ -93,10 +93,11 @@ export class DropdownListItem {
       Store.currencyNames[dropdownID] = fullCurrencyName;
 
       allInputElements.forEach((elem, index) => {
-        if (elem instanceof HTMLInputElement && index !== dropdownID) {
+        if (index !== dropdownID) {
           currencyInput.handleConvert(index)(e, elem);
         }
       });
+
       convertionsTitlte.updateTitle();
       searchInput.resetValue(`${this.listItemClass}--id_${dropdownID}`);
     };

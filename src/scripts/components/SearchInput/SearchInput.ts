@@ -42,15 +42,19 @@ export class SearchInput {
         if (target instanceof HTMLInputElement) {
           const value = target.value.toLowerCase();
 
-          listItems.forEach((item, index) => {
+          listItems.forEach(({ code, name, element }) => {
             const isVisible =
-              item.name.toLowerCase().includes(value) ||
-              item.code.toLocaleLowerCase().includes(value);
+              name.toLowerCase().includes(value) ||
+              code.toLowerCase().includes(value);
 
-            if (item.element instanceof HTMLElement) {
-              item.element.classList.toggle('hide', !isVisible);
-            }
+            element.classList.toggle('hide', !isVisible);
           });
+
+          listItems
+            .filter(({ element }) => !element.classList.contains('hide'))
+            .forEach(({ element }, index) => {
+              element.dataset.translateValue = `${(index + 1) * 100}%`;
+            });
         }
       }
     };
@@ -64,7 +68,7 @@ export class SearchInput {
       item.classList.remove('hide');
 
       if (item instanceof HTMLElement) {
-        item.dataset.translateValue = String((index + 1) * 100) + '%';
+        item.dataset.translateValue = `${(index + 1) * 100}%`;
       }
     });
 

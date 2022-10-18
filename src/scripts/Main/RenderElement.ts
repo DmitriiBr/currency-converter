@@ -18,7 +18,6 @@ export class RenderElement {
     tagName,
     className,
     inner,
-    type,
     dataset,
     attributes,
     actions,
@@ -31,7 +30,7 @@ export class RenderElement {
     this.actions = actions;
   }
 
-  public render(): Node {
+  public render(): HTMLElement {
     const element = document.createElement(this.tagName);
 
     if (typeof this.className === 'string') {

@@ -1,6 +1,6 @@
 import { fetchedData } from '../data';
 import { commonCurrencies } from '../data/commonCurrencies';
-import { ICurrencyRates } from '../types/types';
+import { CustomNodeListOf, ICurrencyRates } from '../types/types';
 
 export const elementGuard = (elem: HTMLElement | null): boolean => {
   return elem === null ? false : true;
@@ -37,7 +37,7 @@ export const getElement = (selector: string) => {
   return element;
 };
 
-export const getAllElements = (selector: string) => {
+export const getAllElements = (selector: string): CustomNodeListOf => {
   const elements = document.querySelectorAll(`.${selector}`);
   return elements;
 };
